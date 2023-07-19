@@ -4,9 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "watch": "webpack --watch",
-    "start": "webpack serve --open",
-     "build": "webpack"
+    "start": "webpack-dev-server  --config webpack.config.js --open",
+    "build": "webpack  --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +20,7 @@
   "homepage": "https://github.com/ivooo369/Todo-List#readme",
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.1",

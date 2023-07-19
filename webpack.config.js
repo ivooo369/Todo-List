@@ -15,7 +15,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Todo List',
+            template: "./src/index.html"
         }),
     ],
     module: {
@@ -25,8 +25,11 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(svg|png|jpg|gif)$/,
                 type: 'asset/resource',
+                generator: {
+                    filename: 'images/[name].[hash][ext][query]'
+                }
             },
         ],
     },

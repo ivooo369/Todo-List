@@ -5,10 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
 <body>
-
+    <header>
+        <div class="header-buttons">
+            <i class="fa fa-bars fa-2x"></i>
+            <i class="fas fa-home fa-2x"></i>
+        </div>
+        <div class="title-container">
+            <h1 class="title">TaskMaster</h1>
+        </div>
+    </header>
+    <div class="content">
+        <div class="menu-container">
+            <div class="sections">
+                <h2 class="menu-titles">Home</h2>
+                <div class="menu-buttons-container">
+                    <button class="menu-buttons" id="all-tasks-button">All Tasks</button>
+                    <button class="menu-buttons" id="today-tasks-button">Today</button>
+                    <button class="menu-buttons" id="week-tasks-button">Next 7 Days</button>
+                </div>
+            </div>
+            <div class="sections">
+                <h2 class="menu-titles">Projects</h2>
+                <div class="projects-container"></div>
+            </div>
+            <div class="sections">
+                <h2 class="menu-titles">Notes</h2>
+                <button class="menu-buttons" id="all-notes-button">Show All Notes</button>
+            </div>
+        </div>
+        <div class="tasks-pages-container">
+            <div class="pages" id="all-tasks-page">
+                <h2>All Tasks</h2>
+            </div>
+            <div class="pages" id="today-tasks-page">
+                <h2>Today</h2>
+            </div>
+            <div class="pages" id="week-tasks-page">
+                <h2>Next 7 Days</h2>
+            </div>
+            <div class="pages" id="all-notes-page">
+                <h2>Notes</h2>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <span>Copyright © 2023 ivooo369</span>
+        <a href="https://github.com/ivooo369" class="github-link"><i class="fab fa-github fa-lg"></i></a>
+    </footer>
 </body>
 
 </html>

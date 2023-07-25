@@ -11,8 +11,8 @@
 <body>
     <header>
         <div class="header-buttons">
-            <i class="fa fa-bars fa-2x"></i>
-            <i class="fas fa-home fa-2x"></i>
+            <i class="fa fa-bars fa-2x" id="menu-button"></i>
+            <i class="fas fa-home fa-2x" id="home-button"></i>
         </div>
         <div class="title-container">
             <h1 class="title">TaskMaster</h1>
@@ -23,9 +23,12 @@
             <div class="sections">
                 <h2 class="menu-titles">Home</h2>
                 <div class="menu-buttons-container">
-                    <button class="menu-buttons" id="all-tasks-button">All Tasks</button>
-                    <button class="menu-buttons" id="today-tasks-button">Today</button>
-                    <button class="menu-buttons" id="week-tasks-button">Next 7 Days</button>
+                    <button class="menu-buttons" id="all-tasks-button">
+                        <i class="fas fa-inbox fa-2x"></i><span>All Tasks</span></button>
+                    <button class="menu-buttons" id="today-tasks-button">
+                        <i class="fas fa-calendar-day fa-2x"></i><span>Today</span></button>
+                    <button class="menu-buttons" id="week-tasks-button">
+                        <i class="fas fa-calendar-week fa-2x"></i><span>Next 7 Days</span></button>
                 </div>
             </div>
             <div class="sections">
@@ -34,21 +37,27 @@
             </div>
             <div class="sections">
                 <h2 class="menu-titles">Notes</h2>
-                <button class="menu-buttons" id="all-notes-button">Show All Notes</button>
+                <button class="menu-buttons" id="all-notes-button">
+                    <i class="fas fa-sticky-note fa-2x"></i><span>Show All Notes</span></button>
             </div>
         </div>
         <div class="tasks-pages-container">
             <div class="pages" id="all-tasks-page">
-                <h2>All Tasks</h2>
+                <h2 class="page-titles">All Tasks</h2>
+                <div class="lists lists-of-tasks">
+                </div>
             </div>
             <div class="pages" id="today-tasks-page">
-                <h2>Today</h2>
+                <h2 class="page-titles">Today</h2>
+                <div class="lists lists-of-tasks"></div>
             </div>
             <div class="pages" id="week-tasks-page">
-                <h2>Next 7 Days</h2>
+                <h2 class="page-titles">Next 7 Days</h2>
+                <div class="lists lists-of-tasks"></div>
             </div>
             <div class="pages" id="all-notes-page">
-                <h2>Notes</h2>
+                <h2 class="page-titles">Notes</h2>
+                <div class="lists list-of-notes"></div>
             </div>
         </div>
     </div>

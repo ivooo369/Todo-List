@@ -1,9 +1,9 @@
 import './style.css';
-import { createTitleIcon } from './domManipulation';
-import { handlePagesEventListeners } from './handleEventListeners';
+import { createImages } from './domManipulation';
+import { handleEventListeners } from './handleEventListeners';
 
-createTitleIcon();
-handlePagesEventListeners();
+createImages();
+handleEventListeners();
 
 export const addTask = (title, description, dueDate, project, priority, isDone) => {
     return { title, description, dueDate, project, priority, isDone };

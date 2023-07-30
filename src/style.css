@@ -25,6 +25,12 @@ header {
     font-size: 1.5rem;
 }
 
+button,
+i {
+    cursor: pointer;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 .title {
     text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
 }
@@ -57,9 +63,12 @@ header {
 .pages {
     display: none;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
+    padding: 1.5rem;
     gap: 0.5rem;
+    background-color: #dcdcdc;
     width: calc(100vw - 23rem);
+    transition: 0.3s ease-in-out;
 }
 
 .pages-full {
@@ -82,10 +91,12 @@ header {
     display: flex;
     flex-direction: column;
     width: 20rem;
+    transition: 0.3s ease-in-out;
 }
 
 .hidden-menu {
-    display: none;
+    transform: translateX(-20rem);
+    width: 0;
 }
 
 .menu-titles {
@@ -110,15 +121,6 @@ header {
     align-self: center;
 }
 
-.tasks-pages-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    gap: 1rem;
-    padding: 1.5rem;
-    background-color: #dcdcdc;
-}
-
 .sections {
     display: flex;
     flex-direction: column;
@@ -134,6 +136,7 @@ header {
 }
 
 .menu-buttons,
+.create-button,
 i {
     transition: 0.3s ease-in-out;
 }
@@ -147,14 +150,29 @@ i {
     width: 100%;
     border: none;
     border-radius: 0.5rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: bold;
     font-size: 1rem;
-    box-shadow: -12px -8px 40px rgba(70, 70, 70, 0.12) inset;
+    box-shadow: -12px -8px 40px rgba(70, 70, 70, 0.2) inset;
+    white-space: nowrap;
 }
 
 .menu-buttons .fas {
     width: 2rem;
+}
+
+.create-button {
+    text-align: center;
+    width: 75%;
+    background-color: rgba(124, 124, 255, 0.5);
+    align-self: center;
+    border: none;
+    border-radius: 1rem;
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 0 auto auto auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0 0 35px 5px rgba(0, 0, 0, 0.25), inset 0 2px 1px 1px rgba(255, 255, 255, 0.9), inset 0 -2px 1px rgba(0, 0, 0, 0.25);
 }
 
 footer {
@@ -180,12 +198,197 @@ header i {
     padding: 0.3rem;
 }
 
-.active {
-    background-color: #cecece;
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+    backdrop-filter: blur(8px);
+    z-index: 9998;
+}
+
+.creation-window {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 1rem;
+    width: 55rem;
+    height: 35rem;
+    background-color: #d3d3d3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.3s ease-in-out;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    z-index: 9999;
+}
+
+.open-creation-window {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.creation-window-header {
+    display: flex;
+    justify-content: space-between;
+    background: #aaaaff;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.creation-window-title {
+    font-size: 1.8rem;
+}
+
+.creation-window-main-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-direction: column;
+    margin: auto;
+    height: 80%;
+}
+
+.selection-section {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 0 0 1rem 0;
+    border-bottom: 3px double black;
+}
+
+.selection-buttons {
+    width: 100%;
+    height: 2.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.creation-window-forms {
+    flex-direction: column;
+    gap: 1rem;
+    width: 50rem;
+}
+
+#todo-form {
+    display: flex;
+}
+
+#project-form {
+    display: none;
+}
+
+#note-form {
+    display: none;
+}
+
+.creation-window-textareas {
+    resize: none;
+    padding: 0.5rem;
+}
+
+textarea {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.creation-window-add-button {
+    width: 25%;
+    height: 3rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin: 0.5rem auto 0 auto;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: hsla(0, 0%, 0%, 0.75);
+    color: #ffffff;
+    transition: 0.3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.creation-window label {
+    margin-right: 0.3rem;
+    font-weight: bold;
+    margin: auto 0.3rem auto 0;
+    font-size: 1rem;
+}
+
+.textareas-titles {
+    font-size: 1.2rem;
+}
+
+.textareas-descriptions {
+    font-size: 1rem;
+}
+
+#todo-description-textarea {
+    height: 10rem;
+}
+
+#todo-project-title-textarea {
+    height: 17.5rem;
+}
+
+#note-description-textarea {
+    height: 12.7rem;
+}
+
+.creation-window-input-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.7rem;
+}
+
+.creation-window-input-section input,
+select {
+    cursor: pointer;
+    width: 10rem;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 0.3rem;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.creation-window-sections {
+    display: flex;
 }
 
 .menu-buttons:hover,
-i:hover {
-    cursor: pointer;
+header i:hover,
+.menu-button-active {
     background-color: #cecece;
+}
+
+footer i:hover {
+    transform: rotate(360deg);
+}
+
+.create-button:hover {
+    background-color: #7c7cffd9;
+}
+
+.selection-buttons:hover,
+.selection-button-active {
+    background: #707070;
+    color: white;
+}
+
+.creation-window-add-button:hover {
+    background-color: hsla(0, 0%, 0%, 0.9);
 }

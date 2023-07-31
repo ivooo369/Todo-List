@@ -136,7 +136,7 @@ i {
 }
 
 .menu-buttons,
-.create-button,
+.creation-button,
 i {
     transition: 0.3s ease-in-out;
 }
@@ -160,7 +160,7 @@ i {
     width: 2rem;
 }
 
-.create-button {
+.creation-button {
     text-align: center;
     width: 75%;
     background-color: rgba(124, 124, 255, 0.5);
@@ -282,7 +282,7 @@ header i {
     width: 50rem;
 }
 
-#todo-form {
+#task-form {
     display: flex;
 }
 
@@ -334,11 +334,11 @@ textarea {
     font-size: 1rem;
 }
 
-#todo-description-textarea {
+#task-description-textarea {
     height: 10rem;
 }
 
-#todo-project-title-textarea {
+#task-project-title-textarea {
     height: 17.5rem;
 }
 
@@ -379,14 +379,14 @@ footer i:hover {
     transform: rotate(360deg);
 }
 
-.create-button:hover {
+.creation-button:hover {
     background-color: #7c7cffd9;
 }
 
 .selection-buttons:hover,
 .selection-button-active {
     background: #707070;
-    color: white;
+    color: #ffffff;
 }
 
 .creation-window-add-button:hover {

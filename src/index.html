@@ -23,7 +23,7 @@
             <div class="sections">
                 <h2 class="menu-titles">Home</h2>
                 <div class="menu-buttons-container">
-                    <button class="menu-buttons active" id="all-tasks-button">
+                    <button class="menu-buttons menu-button-active" id="all-tasks-button">
                         <i class="fas fa-inbox fa-2x"></i><span>All Tasks</span></button>
                     <button class="menu-buttons" id="today-tasks-button">
                         <i class="fas fa-calendar-day fa-2x"></i><span>Today</span></button>
@@ -40,7 +40,7 @@
                 <button class="menu-buttons" id="all-notes-button">
                     <i class="fas fa-sticky-note fa-2x"></i><span>Show All Notes</span></button>
             </div>
-            <button class="create-button">+</button>
+            <button class="creation-button">+</button>
         </div>
         <div class="creation-window hidden">
             <div class="creation-window-header">
@@ -50,15 +50,15 @@
 
             <div class="creation-window-main-section">
                 <div class="selection-section">
-                    <button id="todo-button" class="selection-buttons">To Do</button>
+                    <button id="task-button" class="selection-buttons">To Do</button>
                     <button id="project-button" class="selection-buttons">Project</button>
                     <button id="note-button" class="selection-buttons">Note</button>
                 </div>
                 <div class="data-entry-section">
-                    <form id="todo-form" class="creation-window-forms">
-                        <textarea id="todo-title-textarea" class="creation-window-textareas textareas-titles"
+                    <form id="task-form" class="creation-window-forms">
+                        <textarea id="task-title-textarea" class="creation-window-textareas textareas-titles"
                             placeholder="Title: e.g. Pay bills" maxlength="50"></textarea>
-                        <textarea id="todo-description-textarea"
+                        <textarea id="task-description-textarea"
                             class="creation-window-textareas textareas-descriptions"
                             placeholder="Description: e.g. Do it online..."></textarea>
                         <div class="creation-window-input-section">
@@ -81,12 +81,14 @@
                                 </select>
                             </div>
                         </div>
-                        <button class="creation-window-add-button" type="submit">+ Add a To Do</button>
+                        <button class="creation-window-add-button" id="add-task-submit-button" type="submit">+ Add a To
+                            Do</button>
                     </form>
                     <form id="project-form" class="creation-window-forms">
-                        <textarea id="todo-project-title-textarea" class="creation-window-textareas textareas-titles"
+                        <textarea id="task-project-title-textarea" class="creation-window-textareas textareas-titles"
                             placeholder="Title: e.g. Studying" maxlength="50"></textarea>
-                        <button class="creation-window-add-button" type="submit">+ Add a Project</button>
+                        <button class="creation-window-add-button" id="add-project-submit-button" type="submit">+ Add a
+                            Project</button>
                     </form>
                     <form id="note-form" class="creation-window-forms">
                         <textarea id="note-title-textarea" class="creation-window-textareas textareas-titles"
@@ -94,15 +96,15 @@
                         <textarea id="note-description-textarea"
                             class="creation-window-textareas textareas-descriptions"
                             placeholder="Description:"></textarea>
-                        <button class="creation-window-add-button" type="submit">+ Add a Note</button>
+                        <button class="creation-window-add-button" id="add-note-submit-button" type="submit">+ Add a
+                            Note</button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="pages" id="all-tasks-page">
             <h2 class="page-titles">All Tasks</h2>
-            <div class="lists lists-of-tasks">
-            </div>
+            <div id="list-of-all-tasks" class="lists lists-of-tasks"></div>
         </div>
         <div class="pages" id="today-tasks-page">
             <h2 class="page-titles">Today</h2>

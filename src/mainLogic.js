@@ -1,19 +1,41 @@
-export const taskContainer = {
+export const taskObject = {
     tasksArray: [],
+
+    taskFactory(title, description, dueDate, project, priority, isDone = false) {
+        return { title, description, dueDate, project, priority, isDone };
+    },
+
+    addTask(newTask) {
+        const allTasksArray = this.tasksArray;
+        allTasksArray.push(newTask);
+        console.log(allTasksArray);
+    },
 };
 
-export const taskFactory = (title, description, dueDate, project, priority, isDone = false) => {
-    return { title, description, dueDate, project, priority, isDone };
+export const projectObject = {
+    projectsArray: [],
+
+    projectFactory(title) {
+        return { title };
+    },
+
+    addProject(newProject) {
+        const allProjectsArray = this.projectsArray;
+        allProjectsArray.push(newProject);
+        console.log(allProjectsArray);
+    }
 };
 
-export const addTask = (newTask) => {
-    const allTasksArray = taskContainer.tasksArray;
-    allTasksArray.push(newTask);
-    console.log(allTasksArray);
+export const noteObject = {
+    notesArray: [],
+
+    noteFactory(title, description) {
+        return { title, description };
+    },
+
+    addNote(newNote) {
+        const allNotesArray = this.notesArray;
+        allNotesArray.push(newNote);
+        console.log(allNotesArray);
+    }
 };
-
-// for (let i = 0; i < allTasksArray.length; i++) {
-//     allTasksArray.pop(allTasksArray[i]);
-// }
-
-// console.log(allTasksArray);

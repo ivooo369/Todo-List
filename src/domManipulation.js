@@ -1,7 +1,7 @@
 import titleImageSrc from './images/checklist-image.png';
 import noTasksImageSrc from './images/no-tasks-image.png';
 import noNotesImageSrc from './images/no-notes-image.png';
-import { taskFactory, addTask } from "./mainLogic";
+import { taskObject, projectObject, noteObject } from './mainLogic';
 
 const taskForm = document.querySelector('#task-form');
 const projectForm = document.querySelector('#project-form');
@@ -26,6 +26,9 @@ const taskDescription = document.querySelector('#task-description-textarea');
 const taskDueDate = document.querySelector('#date');
 const taskProject = document.querySelector('#project');
 const taskPriority = document.querySelector('#priority');
+const projectTitle = document.querySelector('#project-title-textarea');
+const noteTitle = document.querySelector('#note-title-textarea');
+const noteDescription = document.querySelector('#note-description-textarea');
 
 export function createImages() {
     createTitleImage();
@@ -159,9 +162,25 @@ export function showNoteForm() {
 
 export function createNewTask(e) {
     e.preventDefault();
-    const newTask = taskFactory(taskTitle.value, taskDescription.value, taskDueDate.value, taskProject.value, taskPriority.value);
-    addTask(newTask);
+    const newTask = taskObject.taskFactory(taskTitle.value, taskDescription.value, taskDueDate.value, taskProject.value, taskPriority.value);
+    taskObject.addTask(newTask);
+    taskForm.reset();
     closeCreationWindow();
 }
 
+export function createNewProject(e) {
+    e.preventDefault();
+    const newProject = projectObject.projectFactory(projectTitle.value);
+    projectObject.addProject(newProject);
+    projectForm.reset();
+    closeCreationWindow();
+}
+
+export function createNewNote(e) {
+    e.preventDefault();
+    const newNote = noteObject.noteFactory(noteTitle.value, noteDescription.value);
+    noteObject.addNote(newNote);
+    noteForm.reset();
+    closeCreationWindow();
+}
 

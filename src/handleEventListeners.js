@@ -1,4 +1,4 @@
-import { closeCreationWindow, createNewTask, openCreationWindow, showNoteForm, showProjectForm, showTaskForm, switchToAllNotesView, switchToAllTasksView, switchToTodayTasksView, switchToWeekTasksView, toggleMenuVisibility } from "./domManipulation";
+import { closeCreationWindow, createNewTask, createNewProject, createNewNote, openCreationWindow, showNoteForm, showProjectForm, showTaskForm, switchToAllNotesView, switchToAllTasksView, switchToTodayTasksView, switchToWeekTasksView, toggleMenuVisibility } from "./domManipulation";
 
 const homeButton = document.querySelector('#home-button');
 const menuToggle = document.querySelector('#menu-toggle');
@@ -12,6 +12,8 @@ const taskButton = document.querySelector('#task-button');
 const projectButton = document.querySelector('#project-button');
 const noteButton = document.querySelector('#note-button');
 const addTaskSubmitButton = document.querySelector('#add-task-submit-button');
+const addProjectSubmitButton = document.querySelector('#add-project-submit-button');
+const addNoteSubmitButton = document.querySelector('#add-note-submit-button');
 
 export function handleEventListeners() {
     homeButton.addEventListener('click', () => switchToAllTasksView());
@@ -26,4 +28,6 @@ export function handleEventListeners() {
     noteButton.addEventListener('click', () => showNoteForm());
     creationWindowCloseButton.addEventListener('click', () => closeCreationWindow());
     addTaskSubmitButton.addEventListener('click', (e) => createNewTask(e));
+    addProjectSubmitButton.addEventListener('click', (e) => createNewProject(e));
+    addNoteSubmitButton.addEventListener('click', (e) => createNewNote(e));
 }

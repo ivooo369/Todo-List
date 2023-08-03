@@ -1,3 +1,17 @@
+import { closeCreationWindow } from "./domManipulation";
+
+const taskForm = document.querySelector('#task-form');
+const projectForm = document.querySelector('#project-form');
+const noteForm = document.querySelector('#note-form');
+const taskTitle = document.querySelector('#task-title-textarea');
+const taskDescription = document.querySelector('#task-description-textarea');
+const taskDueDate = document.querySelector('#date');
+const taskProject = document.querySelector('#project');
+const taskPriority = document.querySelector('#priority');
+const projectTitle = document.querySelector('#project-title-textarea');
+const noteTitle = document.querySelector('#note-title-textarea');
+const noteDescription = document.querySelector('#note-description-textarea');
+
 export const taskObject = {
     tasksArray: [],
 
@@ -39,3 +53,27 @@ export const noteObject = {
         console.log(allNotesArray);
     }
 };
+
+export function addNewTask(e) {
+    e.preventDefault();
+    const newTask = taskObject.taskFactory(taskTitle.value, taskDescription.value, taskDueDate.value, taskProject.value, taskPriority.value);
+    taskObject.addTask(newTask);
+    taskForm.reset();
+    closeCreationWindow();
+}
+
+export function addNewProject(e) {
+    e.preventDefault();
+    const newProject = projectObject.projectFactory(projectTitle.value);
+    projectObject.addProject(newProject);
+    projectForm.reset();
+    closeCreationWindow();
+}
+
+export function addNewNote(e) {
+    e.preventDefault();
+    const newNote = noteObject.noteFactory(noteTitle.value, noteDescription.value);
+    noteObject.addNote(newNote);
+    noteForm.reset();
+    closeCreationWindow();
+}

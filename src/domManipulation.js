@@ -1,11 +1,19 @@
 import titleImageSrc from './images/checklist-image.png';
 import noTasksImageSrc from './images/no-tasks-image.png';
 import noNotesImageSrc from './images/no-notes-image.png';
-import { taskObject, projectObject, noteObject } from './mainLogic';
+import { taskObject, noteObject } from './mainLogic';
 
 const taskForm = document.querySelector('#task-form');
 const projectForm = document.querySelector('#project-form');
 const noteForm = document.querySelector('#note-form');
+const taskTitle = document.querySelector('#task-title-textarea');
+const taskDescription = document.querySelector('#task-description-textarea');
+const taskDueDate = document.querySelector('#date');
+const taskProject = document.querySelector('#project');
+const taskPriority = document.querySelector('#priority');
+const projectTitle = document.querySelector('#project-title-textarea');
+const noteTitle = document.querySelector('#note-title-textarea');
+const noteDescription = document.querySelector('#note-description-textarea');
 const overlay = document.querySelector(".overlay");
 const taskButton = document.querySelector('#task-button');
 const projectButton = document.querySelector('#project-button');
@@ -21,14 +29,8 @@ const weekTasksPage = document.querySelector('#week-tasks-page');
 const allNotesPage = document.querySelector('#all-notes-page');
 const menuContainer = document.querySelector('.menu-container');
 const pages = document.querySelectorAll('.pages');
-const taskTitle = document.querySelector('#task-title-textarea');
-const taskDescription = document.querySelector('#task-description-textarea');
-const taskDueDate = document.querySelector('#date');
-const taskProject = document.querySelector('#project');
-const taskPriority = document.querySelector('#priority');
-const projectTitle = document.querySelector('#project-title-textarea');
-const noteTitle = document.querySelector('#note-title-textarea');
-const noteDescription = document.querySelector('#note-description-textarea');
+const listOfAllTasks = document.querySelector('#list-of-all-tasks');
+const listOfAllNotes = document.querySelector('#list-of-all-notes');
 
 export function createImages() {
     createTitleImage();
@@ -53,16 +55,18 @@ function createNoTasksImage() {
         noTasksImage.src = noTasksImageSrc;
         noTasksImage.alt = 'No Tasks';
         noTasksImage.classList.add('no-tasks-image');
+        noTasksImage.classList.add('image-active');
         list.appendChild(noTasksImage);
     });
 }
 
 function createNoNotesImage() {
-    const listOfNotes = document.querySelector('.list-of-notes');
+    const listOfNotes = document.querySelector('#list-of-all-notes');
     const noNotesImage = new Image();
     noNotesImage.src = noNotesImageSrc;
-    noNotesImage.alt = 'No Tasks';
-    noNotesImage.classList.add('no-tasks-image');
+    noNotesImage.alt = 'No Notes';
+    noNotesImage.classList.add('no-notes-image');
+    noNotesImage.classList.add('image-active');
     listOfNotes.appendChild(noNotesImage);
 }
 
@@ -70,10 +74,10 @@ export function closeCreationWindow() {
     creationWindow.classList.remove('open-creation-window');
     projectButton.classList.remove('selection-button-active');
     noteButton.classList.remove('selection-button-active');
-    overlay.style.display = 'none';
-    taskForm.style.display = 'flex';
-    projectForm.style.display = 'none';
-    noteForm.style.display = 'none';
+    overlay.classList.remove('overlay-active');
+    taskForm.classList.add('form-active');
+    projectForm.classList.remove('form-active');
+    noteForm.classList.remove('form-active');
 }
 
 export function switchToAllTasksView() {
@@ -81,10 +85,10 @@ export function switchToAllTasksView() {
     todayTasksButton.classList.remove('menu-button-active');
     weekTasksButton.classList.remove('menu-button-active');
     allNotesButton.classList.remove('menu-button-active');
-    allTasksPage.style.display = 'flex';
-    todayTasksPage.style.display = 'none';
-    weekTasksPage.style.display = 'none';
-    allNotesPage.style.display = 'none';
+    allTasksPage.classList.add('page-active');
+    todayTasksPage.classList.remove('page-active');
+    weekTasksPage.classList.remove('page-active');
+    allNotesPage.classList.remove('page-active');
 }
 
 export function switchToTodayTasksView() {
@@ -92,10 +96,10 @@ export function switchToTodayTasksView() {
     allTasksButton.classList.remove('menu-button-active');
     weekTasksButton.classList.remove('menu-button-active');
     allNotesButton.classList.remove('menu-button-active');
-    todayTasksPage.style.display = 'flex';
-    allTasksPage.style.display = 'none';
-    weekTasksPage.style.display = 'none';
-    allNotesPage.style.display = 'none';
+    todayTasksPage.classList.add('page-active');
+    allTasksPage.classList.remove('page-active');
+    weekTasksPage.classList.remove('page-active');
+    allNotesPage.classList.remove('page-active');
 }
 
 export function switchToWeekTasksView() {
@@ -103,10 +107,10 @@ export function switchToWeekTasksView() {
     allTasksButton.classList.remove('menu-button-active');
     todayTasksButton.classList.remove('menu-button-active');
     allNotesButton.classList.remove('menu-button-active');
-    weekTasksPage.style.display = 'flex';
-    todayTasksPage.style.display = 'none';
-    allTasksPage.style.display = 'none';
-    allNotesPage.style.display = 'none';
+    weekTasksPage.classList.add('page-active');
+    todayTasksPage.classList.remove('page-active');
+    allTasksPage.classList.remove('page-active');
+    allNotesPage.classList.remove('page-active');
 }
 
 export function switchToAllNotesView() {
@@ -114,10 +118,10 @@ export function switchToAllNotesView() {
     allTasksButton.classList.remove('menu-button-active');
     todayTasksButton.classList.remove('menu-button-active');
     weekTasksButton.classList.remove('menu-button-active');
-    allNotesPage.style.display = 'flex';
-    weekTasksPage.style.display = 'none';
-    todayTasksPage.style.display = 'none';
-    allTasksPage.style.display = 'none';
+    allNotesPage.classList.add('page-active');
+    weekTasksPage.classList.remove('page-active');
+    todayTasksPage.classList.remove('page-active');
+    allTasksPage.classList.remove('page-active');
 }
 
 export function toggleMenuVisibility() {
@@ -130,57 +134,73 @@ export function toggleMenuVisibility() {
 export function openCreationWindow() {
     creationWindow.classList.add('open-creation-window');
     taskButton.classList.add('selection-button-active');
-    overlay.style.display = 'block';
+    overlay.classList.add('overlay-active');
 }
 
 export function showTaskForm() {
-    taskForm.style.display = 'flex';
-    projectForm.style.display = 'none';
-    noteForm.style.display = 'none';
+    taskForm.classList.add('form-active');
+    projectForm.classList.remove('form-active');
+    noteForm.classList.remove('form-active');
     taskButton.classList.add('selection-button-active');
     projectButton.classList.remove('selection-button-active');
     noteButton.classList.remove('selection-button-active');
 }
 
 export function showProjectForm() {
-    projectForm.style.display = 'flex';
-    taskForm.style.display = 'none';
-    noteForm.style.display = 'none';
+    projectForm.classList.add('form-active');
+    taskForm.classList.remove('form-active');
+    noteForm.classList.remove('form-active');
     projectButton.classList.add('selection-button-active');
     taskButton.classList.remove('selection-button-active');
     noteButton.classList.remove('selection-button-active');
 }
 
 export function showNoteForm() {
-    noteForm.style.display = 'flex';
-    taskForm.style.display = 'none';
-    projectForm.style.display = 'none';
+    noteForm.classList.add('form-active');
+    taskForm.classList.remove('form-active');
+    projectForm.classList.remove('form-active');
     noteButton.classList.add('selection-button-active');
     taskButton.classList.remove('selection-button-active');
     projectButton.classList.remove('selection-button-active');
 }
 
-export function createNewTask(e) {
-    e.preventDefault();
-    const newTask = taskObject.taskFactory(taskTitle.value, taskDescription.value, taskDueDate.value, taskProject.value, taskPriority.value);
-    taskObject.addTask(newTask);
-    taskForm.reset();
-    closeCreationWindow();
+export function createNewTaskContainer() {
+    const newTaskContainer = document.createElement("div");
+    newTaskContainer.classList.add('new-task-container');
+    listOfAllTasks.appendChild(newTaskContainer);
+    const newTaskTitle = document.createElement('h3');
+    newTaskTitle.classList.add('new-task-title');
+    newTaskTitle.textContent = taskTitle.value;
+    newTaskContainer.appendChild(newTaskTitle);
+    const newTaskDate = document.createElement('p');
+    newTaskDate.classList.add('new-task-date');
+    newTaskDate.textContent = taskDueDate.value;
+    newTaskContainer.appendChild(newTaskDate);
 }
 
-export function createNewProject(e) {
-    e.preventDefault();
-    const newProject = projectObject.projectFactory(projectTitle.value);
-    projectObject.addProject(newProject);
-    projectForm.reset();
-    closeCreationWindow();
+export function createNewNoteContainer() {
+    const newNoteContainer = document.createElement("div");
+    newNoteContainer.classList.add('new-note-container');
+    listOfAllNotes.appendChild(newNoteContainer);
+    const newNoteTitle = document.createElement('h3');
+    newNoteTitle.classList.add('new-note-title');
+    newNoteTitle.textContent = noteTitle.value;
+    newNoteContainer.appendChild(newNoteTitle);
+    const newNoteDescription = document.createElement('p');
+    newNoteDescription.classList.add('new-note-description');
+    newNoteDescription.textContent = noteDescription.value;
+    newNoteContainer.appendChild(newNoteDescription);
 }
 
-export function createNewNote(e) {
-    e.preventDefault();
-    const newNote = noteObject.noteFactory(noteTitle.value, noteDescription.value);
-    noteObject.addNote(newNote);
-    noteForm.reset();
-    closeCreationWindow();
+export function handlePageImageDisplaying() {
+    const noTasksImage = document.querySelector('.no-tasks-image');
+    const noNotesImage = document.querySelector('.no-notes-image');
+    if (taskObject.tasksArray.length !== 0) {
+        noTasksImage.classList.remove('image-active');
+    } if (noteObject.notesArray.length !== 0) {
+        noNotesImage.classList.remove('image-active');
+    }
 }
+
+
 

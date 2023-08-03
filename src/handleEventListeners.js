@@ -1,4 +1,5 @@
-import { closeCreationWindow, createNewTask, createNewProject, createNewNote, openCreationWindow, showNoteForm, showProjectForm, showTaskForm, switchToAllNotesView, switchToAllTasksView, switchToTodayTasksView, switchToWeekTasksView, toggleMenuVisibility } from "./domManipulation";
+import { closeCreationWindow, openCreationWindow, showNoteForm, showProjectForm, showTaskForm, switchToAllNotesView, switchToAllTasksView, switchToTodayTasksView, switchToWeekTasksView, toggleMenuVisibility, createNewTaskContainer, createNewNoteContainer, handlePageImageDisplaying } from "./domManipulation";
+import { addNewTask, addNewProject, addNewNote } from "./mainLogic";
 
 const homeButton = document.querySelector('#home-button');
 const menuToggle = document.querySelector('#menu-toggle');
@@ -27,7 +28,15 @@ export function handleEventListeners() {
     projectButton.addEventListener('click', () => showProjectForm());
     noteButton.addEventListener('click', () => showNoteForm());
     creationWindowCloseButton.addEventListener('click', () => closeCreationWindow());
-    addTaskSubmitButton.addEventListener('click', (e) => createNewTask(e));
-    addProjectSubmitButton.addEventListener('click', (e) => createNewProject(e));
-    addNoteSubmitButton.addEventListener('click', (e) => createNewNote(e));
+    addTaskSubmitButton.addEventListener('click', (e) => {
+        createNewTaskContainer();
+        addNewTask(e);
+        handlePageImageDisplaying();
+    });
+    addProjectSubmitButton.addEventListener('click', (e) => addNewProject(e));
+    addNoteSubmitButton.addEventListener('click', (e) => {
+        createNewNoteContainer();
+        addNewNote(e);
+        handlePageImageDisplaying();
+    });
 }

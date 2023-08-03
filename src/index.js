@@ -13,4 +13,4 @@ head.appendChild(tabIcon);
 createImages();
 handleEventListeners();
 
-console.log(taskObject.tasksArray);
+console.log(taskObject.tasksArray.length);

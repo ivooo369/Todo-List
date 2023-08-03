@@ -55,7 +55,7 @@
                     <button id="note-button" class="selection-buttons">Note</button>
                 </div>
                 <div class="data-entry-section">
-                    <form id="task-form" class="creation-window-forms">
+                    <form id="task-form" class="creation-window-forms form-active">
                         <textarea id="task-title-textarea" class="creation-window-textareas textareas-titles"
                             placeholder="Title: e.g. Pay bills" maxlength="50"></textarea>
                         <textarea id="task-description-textarea"
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="pages" id="all-tasks-page">
+        <div class="pages page-active" id="all-tasks-page">
             <h2 class="page-titles">All Tasks</h2>
             <div id="list-of-all-tasks" class="lists lists-of-tasks"></div>
         </div>
@@ -116,7 +116,7 @@
         </div>
         <div class="pages" id="all-notes-page">
             <h2 class="page-titles">Notes</h2>
-            <div class="lists list-of-notes"></div>
+            <div id="list-of-all-notes" class="lists"></div>
         </div>
     </div>
     <footer>

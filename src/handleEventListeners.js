@@ -1,5 +1,6 @@
 import { closeCreationWindow, openCreationWindow, showNoteForm, showProjectForm, showTaskForm, switchToAllNotesView, switchToAllTasksView, switchToTodayTasksView, switchToWeekTasksView, toggleMenuVisibility, createNewTaskContainer, createNewNoteContainer, handlePageImageDisplaying } from "./domManipulation";
 import { addNewTask, addNewProject, addNewNote } from "./mainLogic";
+import { validateTaskForm, validateProjectForm, validateNoteForm, clearValidationMessage } from "./validation";
 
 const homeButton = document.querySelector('#home-button');
 const menuToggle = document.querySelector('#menu-toggle');
@@ -15,6 +16,12 @@ const noteButton = document.querySelector('#note-button');
 const addTaskSubmitButton = document.querySelector('#add-task-submit-button');
 const addProjectSubmitButton = document.querySelector('#add-project-submit-button');
 const addNoteSubmitButton = document.querySelector('#add-note-submit-button');
+const taskTitleInput = document.querySelector('#task-title-input');
+const taskDescriptionInput = document.querySelector('#task-description-input');
+const taskPriorityInput = document.querySelector('#task-priority-input');
+const projectTitleInput = document.querySelector('#project-title-input');
+const noteTitleInput = document.querySelector('#note-title-input');
+const noteDescriptionInput = document.querySelector('#note-description-input');
 
 export function handleEventListeners() {
     homeButton.addEventListener('click', () => switchToAllTasksView());
@@ -28,15 +35,31 @@ export function handleEventListeners() {
     projectButton.addEventListener('click', () => showProjectForm());
     noteButton.addEventListener('click', () => showNoteForm());
     creationWindowCloseButton.addEventListener('click', () => closeCreationWindow());
+    taskTitleInput.addEventListener('input', clearValidationMessage);
+    taskDescriptionInput.addEventListener('input', clearValidationMessage);
+    taskPriorityInput.addEventListener('input', clearValidationMessage);
+    projectTitleInput.addEventListener('input', clearValidationMessage);
+    noteTitleInput.addEventListener('input', clearValidationMessage);
+    noteDescriptionInput.addEventListener('input', clearValidationMessage);
     addTaskSubmitButton.addEventListener('click', (e) => {
-        createNewTaskContainer();
-        addNewTask(e);
-        handlePageImageDisplaying();
+        e.preventDefault();
+        if (validateTaskForm()) {
+            createNewTaskContainer();
+            addNewTask();
+            handlePageImageDisplaying();
+        }
     });
-    addProjectSubmitButton.addEventListener('click', (e) => addNewProject(e));
+    addProjectSubmitButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (validateProjectForm())
+            addNewProject();
+    });
     addNoteSubmitButton.addEventListener('click', (e) => {
-        createNewNoteContainer();
-        addNewNote(e);
-        handlePageImageDisplaying();
+        e.preventDefault();
+        if (validateNoteForm()) {
+            createNewNoteContainer();
+            addNewNote();
+            handlePageImageDisplaying();
+        }
     });
 }

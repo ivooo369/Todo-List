@@ -6,14 +6,14 @@ import { taskObject, noteObject } from './mainLogic';
 const taskForm = document.querySelector('#task-form');
 const projectForm = document.querySelector('#project-form');
 const noteForm = document.querySelector('#note-form');
-const taskTitle = document.querySelector('#task-title-textarea');
-const taskDescription = document.querySelector('#task-description-textarea');
-const taskDueDate = document.querySelector('#date');
-const taskProject = document.querySelector('#project');
-const taskPriority = document.querySelector('#priority');
-const projectTitle = document.querySelector('#project-title-textarea');
-const noteTitle = document.querySelector('#note-title-textarea');
-const noteDescription = document.querySelector('#note-description-textarea');
+const taskTitleInput = document.querySelector('#task-title-input');
+const taskDescriptionInput = document.querySelector('#task-description-input');
+const taskDueDateInput = document.querySelector('#task-date-input');
+const taskProjectInput = document.querySelector('#task-project-input');
+const taskPriorityInput = document.querySelector('#task-priority-input');
+const projectTitleInput = document.querySelector('#project-title-input');
+const noteTitleInput = document.querySelector('#note-title-input');
+const noteDescriptionInput = document.querySelector('#note-description-input');
 const overlay = document.querySelector(".overlay");
 const taskButton = document.querySelector('#task-button');
 const projectButton = document.querySelector('#project-button');
@@ -54,8 +54,7 @@ function createNoTasksImage() {
         const noTasksImage = new Image();
         noTasksImage.src = noTasksImageSrc;
         noTasksImage.alt = 'No Tasks';
-        noTasksImage.classList.add('no-tasks-image');
-        noTasksImage.classList.add('image-active');
+        noTasksImage.classList.add('no-tasks-image', 'image-active');
         list.appendChild(noTasksImage);
     });
 }
@@ -65,8 +64,7 @@ function createNoNotesImage() {
     const noNotesImage = new Image();
     noNotesImage.src = noNotesImageSrc;
     noNotesImage.alt = 'No Notes';
-    noNotesImage.classList.add('no-notes-image');
-    noNotesImage.classList.add('image-active');
+    noNotesImage.classList.add('no-notes-image', 'image-active');
     listOfNotes.appendChild(noNotesImage);
 }
 
@@ -78,6 +76,18 @@ export function closeCreationWindow() {
     taskForm.classList.add('form-active');
     projectForm.classList.remove('form-active');
     noteForm.classList.remove('form-active');
+    clearFormInputs();
+}
+
+function clearFormInputs() {
+    taskTitleInput.value = '';
+    taskDescriptionInput.value = '';
+    taskDueDateInput.value = '';
+    taskPriorityInput.value = '';
+    taskProjectInput.value = '';
+    projectTitleInput.value = '';
+    noteTitleInput.value = '';
+    noteDescriptionInput.value = '';
 }
 
 export function switchToAllTasksView() {
@@ -165,17 +175,30 @@ export function showNoteForm() {
 }
 
 export function createNewTaskContainer() {
-    const newTaskContainer = document.createElement("div");
+    const newTaskContainer = document.createElement('div');
     newTaskContainer.classList.add('new-task-container');
     listOfAllTasks.appendChild(newTaskContainer);
+    const newTaskStatus = document.createElement('input');
+    newTaskStatus.setAttribute("type", "checkbox");
+    newTaskStatus.classList.add('new-task-data', 'new-task-status');
+    newTaskContainer.appendChild(newTaskStatus);
     const newTaskTitle = document.createElement('h3');
-    newTaskTitle.classList.add('new-task-title');
-    newTaskTitle.textContent = taskTitle.value;
+    newTaskTitle.classList.add('new-task-data', 'new-task-title');
+    newTaskTitle.textContent = taskTitleInput.value;
     newTaskContainer.appendChild(newTaskTitle);
     const newTaskDate = document.createElement('p');
-    newTaskDate.classList.add('new-task-date');
-    newTaskDate.textContent = taskDueDate.value;
+    newTaskDate.classList.add('new-task-data', 'new-task-date');
+    newTaskDate.textContent = taskDueDateInput.value;
     newTaskContainer.appendChild(newTaskDate);
+    const iconsContainer = document.createElement('div');
+    iconsContainer.classList.add('new-task-data', 'icons-container');
+    newTaskContainer.appendChild(iconsContainer);
+    const editIcon = document.createElement('i');
+    editIcon.classList.add('fas', 'fa-edit', 'icon');
+    iconsContainer.appendChild(editIcon);
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash', 'icon');
+    iconsContainer.appendChild(deleteIcon);
 }
 
 export function createNewNoteContainer() {
@@ -184,11 +207,11 @@ export function createNewNoteContainer() {
     listOfAllNotes.appendChild(newNoteContainer);
     const newNoteTitle = document.createElement('h3');
     newNoteTitle.classList.add('new-note-title');
-    newNoteTitle.textContent = noteTitle.value;
+    newNoteTitle.textContent = noteTitleInput.value;
     newNoteContainer.appendChild(newNoteTitle);
     const newNoteDescription = document.createElement('p');
     newNoteDescription.classList.add('new-note-description');
-    newNoteDescription.textContent = noteDescription.value;
+    newNoteDescription.textContent = noteDescriptionInput.value;
     newNoteContainer.appendChild(newNoteDescription);
 }
 
@@ -201,6 +224,8 @@ export function handlePageImageDisplaying() {
         noNotesImage.classList.remove('image-active');
     }
 }
+
+
 
 
 

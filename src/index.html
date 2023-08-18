@@ -47,7 +47,6 @@
                 <h3 class="creation-window-title">Create a new...</h3>
                 <i id="creation-window-close-button" class="fas fa-times fa-2x"></i>
             </div>
-
             <div class="creation-window-main-section">
                 <div class="selection-section">
                     <button id="task-button" class="selection-buttons">To Do</button>
@@ -56,18 +55,17 @@
                 </div>
                 <div class="data-entry-section">
                     <form id="task-form" class="creation-window-forms form-active">
-                        <textarea id="task-title-textarea" class="creation-window-textareas textareas-titles"
-                            placeholder="Title: e.g. Pay bills" maxlength="50"></textarea>
-                        <textarea id="task-description-textarea"
-                            class="creation-window-textareas textareas-descriptions"
-                            placeholder="Description: e.g. Do it online..."></textarea>
+                        <textarea id="task-title-input" class="creation-window-textareas textareas-titles"
+                            placeholder="Title: e.g. Pay bills" maxlength="50" required></textarea>
+                        <textarea id="task-description-input" class="creation-window-textareas textareas-descriptions"
+                            placeholder="Description: e.g. Do it online..." required></textarea>
                         <div class="creation-window-input-section">
                             <div class="creation-window-sections">
-                                <label for="date">Due Date: </label><input type="date" id="date">
+                                <label for="task-date-input">Due Date: </label><input type="date" id="task-date-input">
                             </div>
                             <div class="creation-window-sections">
-                                <label for="priority">Priority: </label>
-                                <select name="priority" id="priority">
+                                <label for="task-priority-input">Priority: </label>
+                                <select name="priority" id="task-priority-input">
                                     <option value="" disabled selected>-- Select a Priority --</option>
                                     <option value="Low">Low</option>
                                     <option value="Medium">Medium</option>
@@ -75,9 +73,9 @@
                                 </select>
                             </div>
                             <div class="creation-window-sections">
-                                <label for="project">Project (opt.): </label>
-                                <select id="project" name="project">
-                                    <option value="">-- Select a Project --</option>
+                                <label for="task-project-input">Project (opt.): </label>
+                                <select name="project" id="task-project-input">
+                                    <option value="">All Tasks (Default)</option>
                                 </select>
                             </div>
                         </div>
@@ -85,17 +83,16 @@
                             Do</button>
                     </form>
                     <form id="project-form" class="creation-window-forms">
-                        <textarea id="project-title-textarea" class="creation-window-textareas textareas-titles"
-                            placeholder="Title: e.g. Studying" maxlength="50"></textarea>
+                        <textarea id="project-title-input" class="creation-window-textareas textareas-titles"
+                            placeholder="Title: e.g. Studying" maxlength="50" required></textarea>
                         <button class="creation-window-add-button" id="add-project-submit-button" type="submit">+ Add a
                             Project</button>
                     </form>
                     <form id="note-form" class="creation-window-forms">
-                        <textarea id="note-title-textarea" class="creation-window-textareas textareas-titles"
-                            placeholder="Title:" maxlength="50"></textarea>
-                        <textarea id="note-description-textarea"
-                            class="creation-window-textareas textareas-descriptions"
-                            placeholder="Description:"></textarea>
+                        <textarea id="note-title-input" class="creation-window-textareas textareas-titles"
+                            placeholder="Title:" maxlength="50" required></textarea>
+                        <textarea id="note-description-input" class="creation-window-textareas textareas-descriptions"
+                            placeholder="Description:" required></textarea>
                         <button class="creation-window-add-button" id="add-note-submit-button" type="submit">+ Add a
                             Note</button>
                     </form>

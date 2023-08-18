@@ -3,14 +3,14 @@ import { closeCreationWindow } from "./domManipulation";
 const taskForm = document.querySelector('#task-form');
 const projectForm = document.querySelector('#project-form');
 const noteForm = document.querySelector('#note-form');
-const taskTitle = document.querySelector('#task-title-textarea');
-const taskDescription = document.querySelector('#task-description-textarea');
-const taskDueDate = document.querySelector('#date');
-const taskProject = document.querySelector('#project');
-const taskPriority = document.querySelector('#priority');
-const projectTitle = document.querySelector('#project-title-textarea');
-const noteTitle = document.querySelector('#note-title-textarea');
-const noteDescription = document.querySelector('#note-description-textarea');
+const taskTitleInput = document.querySelector('#task-title-input');
+const taskDescriptionInput = document.querySelector('#task-description-input');
+const taskDueDateInput = document.querySelector('#task-date-input');
+const taskProjectInput = document.querySelector('#task-project-input');
+const taskPriorityInput = document.querySelector('#task-priority-input');
+const projectTitleInput = document.querySelector('#project-title-input');
+const noteTitleInput = document.querySelector('#note-title-input');
+const noteDescriptionInput = document.querySelector('#note-description-input');
 
 export const taskObject = {
     tasksArray: [],
@@ -54,25 +54,22 @@ export const noteObject = {
     }
 };
 
-export function addNewTask(e) {
-    e.preventDefault();
-    const newTask = taskObject.taskFactory(taskTitle.value, taskDescription.value, taskDueDate.value, taskProject.value, taskPriority.value);
+export function addNewTask() {
+    const newTask = taskObject.taskFactory(taskTitleInput.value, taskDescriptionInput.value, taskDueDateInput.value, taskProjectInput.value, taskPriorityInput.value);
     taskObject.addTask(newTask);
     taskForm.reset();
     closeCreationWindow();
 }
 
-export function addNewProject(e) {
-    e.preventDefault();
-    const newProject = projectObject.projectFactory(projectTitle.value);
+export function addNewProject() {
+    const newProject = projectObject.projectFactory(projectTitleInput.value);
     projectObject.addProject(newProject);
     projectForm.reset();
     closeCreationWindow();
 }
 
-export function addNewNote(e) {
-    e.preventDefault();
-    const newNote = noteObject.noteFactory(noteTitle.value, noteDescription.value);
+export function addNewNote() {
+    const newNote = noteObject.noteFactory(noteTitleInput.value, noteDescriptionInput.value);
     noteObject.addNote(newNote);
     noteForm.reset();
     closeCreationWindow();

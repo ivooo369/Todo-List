@@ -198,6 +198,7 @@ export function createNewTaskContainer() {
     iconsContainer.appendChild(editIcon);
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fas', 'fa-trash', 'icon');
+    setNewTaskColor(newTaskContainer, taskPriorityInput);
     iconsContainer.appendChild(deleteIcon);
 }
 
@@ -222,6 +223,16 @@ export function handlePageImageDisplaying() {
         noTasksImage.classList.remove('image-active');
     } if (noteObject.notesArray.length !== 0) {
         noNotesImage.classList.remove('image-active');
+    }
+}
+
+function setNewTaskColor(newTask, newTaskPriority) {
+    if (newTaskPriority.value === 'Low') {
+        newTask.style.borderLeftColor = '#006400';
+    } else if (newTaskPriority.value === 'Medium') {
+        newTask.style.borderLeftColor = '#ff8c00';
+    } else {
+        newTask.style.borderLeftColor = '#8b0000';
     }
 }
 

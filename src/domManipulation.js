@@ -202,6 +202,16 @@ export function createNewTaskContainer() {
     iconsContainer.appendChild(deleteIcon);
 }
 
+function setNewTaskColor(newTask, newTaskPriority) {
+    if (newTaskPriority.value === 'Low') {
+        newTask.style.borderLeftColor = '#006400';
+    } else if (newTaskPriority.value === 'Medium') {
+        newTask.style.borderLeftColor = '#ff8c00';
+    } else {
+        newTask.style.borderLeftColor = '#8b0000';
+    }
+}
+
 export function createNewNoteContainer() {
     const newNoteContainer = document.createElement("div");
     newNoteContainer.classList.add('new-note-container');

@@ -198,6 +198,7 @@ export function createNewTaskContainer() {
     iconsContainer.appendChild(editIcon);
     const deleteIcon = document.createElement('i');
     deleteIcon.classList.add('fas', 'fa-trash', 'icon');
+    setNewTaskColor(newTaskContainer, taskPriorityInput);
     iconsContainer.appendChild(deleteIcon);
 }
 

@@ -117,8 +117,9 @@ i {
     align-items: center;
     padding: 0.5rem 0;
     border-radius: 0.5rem;
-    width: 100%;
+    width: calc(100% - 10px);
     background-color: #80808066;
+    border-left: 10px solid;
 }
 
 .new-task-data {

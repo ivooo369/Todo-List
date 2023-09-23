@@ -42,28 +42,29 @@
             </div>
             <button class="creation-button">+</button>
         </div>
-        <div class="creation-window hidden">
-            <div class="creation-window-header">
-                <h3 class="creation-window-title">Create a new...</h3>
+        <div id="creation-task-window" class="creation-and-edit-windows hidden">
+            <div class="creation-and-edit-windows-header">
+                <h3 class="creation-and-edit-windows-title">Create a new...</h3>
                 <i id="creation-window-close-button" class="fas fa-times fa-2x"></i>
             </div>
-            <div class="creation-window-main-section">
+            <div class="creation-and-edit-windows-main-section">
                 <div class="selection-section">
                     <button id="task-button" class="selection-buttons">To Do</button>
                     <button id="project-button" class="selection-buttons">Project</button>
                     <button id="note-button" class="selection-buttons">Note</button>
                 </div>
                 <div class="data-entry-section">
-                    <form id="task-form" class="creation-window-forms form-active">
-                        <textarea id="task-title-input" class="creation-window-textareas textareas-titles"
+                    <form id="creation-task-form" class="creation-and-edit-windows-forms form-active">
+                        <textarea id="task-title-input" class="creation-and-edit-windows-textareas textareas-titles"
                             placeholder="Title: e.g. Pay bills" maxlength="50" required></textarea>
-                        <textarea id="task-description-input" class="creation-window-textareas textareas-descriptions"
+                        <textarea id="task-description-input"
+                            class="creation-and-edit-windows-textareas textareas-descriptions"
                             placeholder="Description: e.g. Do it online..." required></textarea>
-                        <div class="creation-window-input-section">
-                            <div class="creation-window-sections">
+                        <div class="creation-and-edit-windows-inputs-section">
+                            <div class="creation-and-edit-window-sections">
                                 <label for="task-date-input">Due Date: </label><input type="date" id="task-date-input">
                             </div>
-                            <div class="creation-window-sections">
+                            <div class="creation-and-edit-windows-sections">
                                 <label for="task-priority-input">Priority: </label>
                                 <select name="priority" id="task-priority-input">
                                     <option value="" disabled selected>-- Select a Priority --</option>
@@ -72,31 +73,69 @@
                                     <option value="High">High</option>
                                 </select>
                             </div>
-                            <div class="creation-window-sections">
+                            <div class="creation-and-edit-windows-sections">
                                 <label for="task-project-input">Project (opt.): </label>
                                 <select name="project" id="task-project-input">
                                     <option value="">All Tasks (Default)</option>
                                 </select>
                             </div>
                         </div>
-                        <button class="creation-window-add-button" id="add-task-submit-button" type="submit">+ Add a To
-                            Do</button>
+                        <button class="creation-and-edit-windows-button" id="add-task-submit-button" type="submit">+ Add
+                            a To Do</button>
                     </form>
-                    <form id="project-form" class="creation-window-forms">
-                        <textarea id="project-title-input" class="creation-window-textareas textareas-titles"
+                    <form id="project-form" class="creation-and-edit-windows-forms">
+                        <textarea id="project-title-input" class="creation-and-edit-windows-textareas textareas-titles"
                             placeholder="Title: e.g. Studying" maxlength="50" required></textarea>
-                        <button class="creation-window-add-button" id="add-project-submit-button" type="submit">+ Add a
-                            Project</button>
+                        <button class="creation-and-edit-windows-button" id="add-project-submit-button" type="submit">+
+                            Add a Project</button>
                     </form>
-                    <form id="note-form" class="creation-window-forms">
-                        <textarea id="note-title-input" class="creation-window-textareas textareas-titles"
+                    <form id="note-form" class="creation-and-edit-windows-forms">
+                        <textarea id="note-title-input" class="creation-and-edit-windows-textareas textareas-titles"
                             placeholder="Title:" maxlength="50" required></textarea>
-                        <textarea id="note-description-input" class="creation-window-textareas textareas-descriptions"
+                        <textarea id="note-description-input"
+                            class="creation-and-edit-windows-textareas textareas-descriptions"
                             placeholder="Description:" required></textarea>
-                        <button class="creation-window-add-button" id="add-note-submit-button" type="submit">+ Add a
-                            Note</button>
+                        <button class="creation-and-edit-windows-button" id="add-note-submit-button" type="submit">+ Add
+                            a Note</button>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div id="edit-task-window" class="creation-and-edit-windows hidden">
+            <div id="edit-window-main-section" class="creation-and-edit-windows-main-section">
+                <div class="creation-and-edit-windows-header">
+                    <h3 class="creation-and-edit-windows-title">Edit a task</h3>
+                    <i id="edit-window-close-button" class="fas fa-times fa-2x"></i>
+                </div>
+                <form id="edit-task-form" class="creation-and-edit-windows-forms form-active">
+                    <textarea id="edit-task-title-input" class="creation-and-edit-windows-textareas textareas-titles"
+                        placeholder="Title: e.g. Pay bills" maxlength="50" required></textarea>
+                    <textarea id="edit-task-description-input"
+                        class="creation-and-edit-windows-textareas textareas-descriptions"
+                        placeholder="Description: e.g. Do it online..." required></textarea>
+                    <div class="creation-and-edit-windows-inputs-section">
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-date-input">Due Date: </label><input type="date" id="edit-task-date-input">
+                        </div>
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-priority-input">Priority: </label>
+                            <select name="priority" id="edit-task-priority-input">
+                                <option value="" disabled selected>-- Select a Priority --</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-project-input">Project (opt.): </label>
+                            <select name="project" id="task-project-input">
+                                <option value="">All Tasks (Default)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="creation-and-edit-windows-button" id="edit-task-submit-button" type="submit">Edit a
+                        Task</button>
+                </form>
             </div>
         </div>
         <div class="pages page-active" id="all-tasks-page">

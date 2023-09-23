@@ -3,7 +3,7 @@ import noTasksImageSrc from './images/no-tasks-image.png';
 import noNotesImageSrc from './images/no-notes-image.png';
 import { taskObject, noteObject } from './mainLogic';
 
-const taskForm = document.querySelector('#task-form');
+const creationTaskForm = document.querySelector('#creation-task-form');
 const projectForm = document.querySelector('#project-form');
 const noteForm = document.querySelector('#note-form');
 const taskTitleInput = document.querySelector('#task-title-input');
@@ -18,7 +18,8 @@ const overlay = document.querySelector(".overlay");
 const taskButton = document.querySelector('#task-button');
 const projectButton = document.querySelector('#project-button');
 const noteButton = document.querySelector('#note-button');
-const creationWindow = document.querySelector('.creation-window');
+const creationWindow = document.querySelector('#creation-task-window');
+const editWindow = document.querySelector('#edit-task-window');
 const allTasksButton = document.querySelector('#all-tasks-button');
 const todayTasksButton = document.querySelector('#today-tasks-button');
 const weekTasksButton = document.querySelector('#week-tasks-button');
@@ -31,6 +32,13 @@ const menuContainer = document.querySelector('.menu-container');
 const pages = document.querySelectorAll('.pages');
 const listOfAllTasks = document.querySelector('#list-of-all-tasks');
 const listOfAllNotes = document.querySelector('#list-of-all-notes');
+const editTaskTitleInput = document.querySelector('#edit-task-title-input');
+const editTaskDescriptionInput = document.querySelector('#edit-task-description-input');
+const editTaskDueDateInput = document.querySelector('#edit-task-date-input');
+const editTaskPriorityInput = document.querySelector('#edit-task-priority-input');
+const editTaskProjectInput = document.querySelector('#edit-task-project-input');
+
+export let currentTaskTitle = '';
 
 export function createImages() {
     createTitleImage();
@@ -69,13 +77,19 @@ function createNoNotesImage() {
 }
 
 export function closeCreationWindow() {
-    creationWindow.classList.remove('open-creation-window');
+    creationWindow.classList.remove('open-window');
     projectButton.classList.remove('selection-button-active');
     noteButton.classList.remove('selection-button-active');
     overlay.classList.remove('overlay-active');
-    taskForm.classList.add('form-active');
+    creationTaskForm.classList.add('form-active');
     projectForm.classList.remove('form-active');
     noteForm.classList.remove('form-active');
+    clearFormInputs();
+}
+
+export function closeEditWindow() {
+    editWindow.classList.remove('open-window');
+    overlay.classList.remove('overlay-active');
     clearFormInputs();
 }
 
@@ -142,13 +156,13 @@ export function toggleMenuVisibility() {
 }
 
 export function openCreationWindow() {
-    creationWindow.classList.add('open-creation-window');
+    creationWindow.classList.add('open-window');
     taskButton.classList.add('selection-button-active');
     overlay.classList.add('overlay-active');
 }
 
 export function showTaskForm() {
-    taskForm.classList.add('form-active');
+    creationTaskForm.classList.add('form-active');
     projectForm.classList.remove('form-active');
     noteForm.classList.remove('form-active');
     taskButton.classList.add('selection-button-active');
@@ -158,7 +172,7 @@ export function showTaskForm() {
 
 export function showProjectForm() {
     projectForm.classList.add('form-active');
-    taskForm.classList.remove('form-active');
+    creationTaskForm.classList.remove('form-active');
     noteForm.classList.remove('form-active');
     projectButton.classList.add('selection-button-active');
     taskButton.classList.remove('selection-button-active');
@@ -167,42 +181,55 @@ export function showProjectForm() {
 
 export function showNoteForm() {
     noteForm.classList.add('form-active');
-    taskForm.classList.remove('form-active');
+    creationTaskForm.classList.remove('form-active');
     projectForm.classList.remove('form-active');
     noteButton.classList.add('selection-button-active');
     taskButton.classList.remove('selection-button-active');
     projectButton.classList.remove('selection-button-active');
 }
 
+function setTaskContainerId() {
+    let numberOfTasks = listOfAllTasks.childElementCount;
+    let taskContainerId = 0 + (numberOfTasks - 1);
+    return taskContainerId;
+}
+
 export function createNewTaskContainer() {
     const newTaskContainer = document.createElement('div');
     newTaskContainer.classList.add('new-task-container');
+    newTaskContainer.setAttribute('data-task', setTaskContainerId());
     listOfAllTasks.appendChild(newTaskContainer);
     const newTaskStatus = document.createElement('input');
-    newTaskStatus.setAttribute("type", "checkbox");
-    newTaskStatus.classList.add('new-task-data', 'new-task-status');
+    newTaskStatus.setAttribute('type', 'checkbox');
+    newTaskStatus.classList.add('new-task-data-container', 'new-task-status');
     newTaskContainer.appendChild(newTaskStatus);
     const newTaskTitle = document.createElement('h3');
-    newTaskTitle.classList.add('new-task-data', 'new-task-title');
+    newTaskTitle.classList.add('new-task-data-container', 'new-task-title');
+    newTaskTitle.setAttribute('data-task-title', newTaskContainer.getAttribute('data-task'));
     newTaskTitle.textContent = taskTitleInput.value;
     newTaskContainer.appendChild(newTaskTitle);
-    const newTaskDate = document.createElement('p');
-    newTaskDate.classList.add('new-task-data', 'new-task-date');
-    newTaskDate.textContent = taskDueDateInput.value;
-    newTaskContainer.appendChild(newTaskDate);
-    const iconsContainer = document.createElement('div');
-    iconsContainer.classList.add('new-task-data', 'icons-container');
-    newTaskContainer.appendChild(iconsContainer);
-    const editIcon = document.createElement('i');
-    editIcon.classList.add('fas', 'fa-edit', 'icon');
-    iconsContainer.appendChild(editIcon);
-    const deleteIcon = document.createElement('i');
-    deleteIcon.classList.add('fas', 'fa-trash', 'icon');
+    const newTaskDueDate = document.createElement('p');
+    newTaskDueDate.classList.add('new-task-data-container', 'new-task-date');
+    newTaskDueDate.setAttribute('data-task-date', newTaskContainer.getAttribute('data-task'));
+    newTaskDueDate.textContent = taskDueDateInput.value;
+    newTaskContainer.appendChild(newTaskDueDate);
     setNewTaskColor(newTaskContainer, taskPriorityInput);
-    iconsContainer.appendChild(deleteIcon);
+    createEditAndDeleteButtons(newTaskContainer);
 }
 
-function setNewTaskColor(newTask, newTaskPriority) {
+function createEditAndDeleteButtons(container) {
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.classList.add('new-task-data-container', 'buttons-container');
+    container.appendChild(buttonsContainer);
+    const editButton = document.createElement('i');
+    editButton.classList.add('fas', 'fa-edit', 'edit-button', 'icon');
+    buttonsContainer.appendChild(editButton);
+    const deleteButton = document.createElement('i');
+    deleteButton.classList.add('fas', 'fa-trash', 'delete-button', 'icon');
+    buttonsContainer.appendChild(deleteButton);
+}
+
+export function setNewTaskColor(newTask, newTaskPriority) {
     if (newTaskPriority.value === 'Low') {
         newTask.style.borderLeftColor = '#006400';
     } else if (newTaskPriority.value === 'Medium') {
@@ -229,13 +256,30 @@ export function createNewNoteContainer() {
 export function handlePageImageDisplaying() {
     const noTasksImage = document.querySelector('.no-tasks-image');
     const noNotesImage = document.querySelector('.no-notes-image');
-    if (taskObject.tasksArray.length !== 0) {
+    if (taskObject.tasksArray.length === 0) {
+        noTasksImage.classList.add('image-active');
+    } else {
         noTasksImage.classList.remove('image-active');
-    } if (noteObject.notesArray.length !== 0) {
+    }
+    if (noteObject.notesArray.length === 0) {
+        noNotesImage.classList.add('image-active');
+    } else {
         noNotesImage.classList.remove('image-active');
     }
 }
 
+export function openEditTaskWindow(taskToEdit) {
+    const allTasksArray = taskObject.tasksArray;
+    const indexToEdit = parseInt(taskToEdit.getAttribute('data-task'), 10);
+    editWindow.classList.add('open-window');
+    overlay.classList.add('overlay-active');
+    currentTaskTitle = taskObject.taskTitlesArray[indexToEdit];
+    editTaskTitleInput.value = allTasksArray[indexToEdit].title.trim();
+    editTaskDescriptionInput.value = allTasksArray[indexToEdit].description.trim();
+    editTaskDueDateInput.value = allTasksArray[indexToEdit].dueDate;
+    editTaskPriorityInput.value = allTasksArray[indexToEdit].priority;
+    // editTaskProjectInput.value = allTasksArray[indexToEdit].project;
+}
 
 
 

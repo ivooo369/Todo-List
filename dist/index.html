@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-<script defer src="main.01502611d8ad26e9decc.bundle.js"></script></head>
+<script defer src="main.b3791e500a277cb3a5bf.bundle.js"></script></head>
 
 <body>
     <header>
         <div class="header-buttons">
-            <i class="fa fa-bars fa-2x"></i>
-            <i class="fas fa-home fa-2x"></i>
+            <i class="fa fa-bars fa-2x" id="menu-toggle"></i>
+            <i class="fas fa-home fa-2x" id="home-button"></i>
         </div>
         <div class="title-container">
             <h1 class="title">TaskMaster</h1>
@@ -23,9 +23,12 @@
             <div class="sections">
                 <h2 class="menu-titles">Home</h2>
                 <div class="menu-buttons-container">
-                    <button class="menu-buttons">All Tasks</button>
-                    <button class="menu-buttons">Today</button>
-                    <button class="menu-buttons">Next 7 Days</button>
+                    <button class="menu-buttons menu-button-active" id="all-tasks-button">
+                        <i class="fas fa-inbox fa-2x"></i><span>All Tasks</span></button>
+                    <button class="menu-buttons" id="today-tasks-button">
+                        <i class="fas fa-calendar-day fa-2x"></i><span>Today</span></button>
+                    <button class="menu-buttons" id="week-tasks-button">
+                        <i class="fas fa-calendar-week fa-2x"></i><span>Next 7 Days</span></button>
                 </div>
             </div>
             <div class="sections">
@@ -34,10 +37,129 @@
             </div>
             <div class="sections">
                 <h2 class="menu-titles">Notes</h2>
-                <button class="menu-buttons">Show All Notes</button>
+                <button class="menu-buttons" id="all-notes-button">
+                    <i class="fas fa-sticky-note fa-2x"></i><span>Show All Notes</span></button>
+            </div>
+            <button class="creation-button">+</button>
+        </div>
+        <div id="creation-task-window" class="creation-and-edit-windows hidden">
+            <div class="creation-and-edit-windows-header">
+                <h3 class="creation-and-edit-windows-title">Create a new...</h3>
+                <i id="creation-window-close-button" class="fas fa-times fa-2x"></i>
+            </div>
+            <div class="creation-and-edit-windows-main-section">
+                <div class="selection-section">
+                    <button id="task-button" class="selection-buttons">To Do</button>
+                    <button id="project-button" class="selection-buttons">Project</button>
+                    <button id="note-button" class="selection-buttons">Note</button>
+                </div>
+                <div class="data-entry-section">
+                    <form id="creation-task-form" class="creation-and-edit-windows-forms form-active">
+                        <textarea id="task-title-input" class="creation-and-edit-windows-textareas textareas-titles"
+                            placeholder="Title: e.g. Pay bills" maxlength="50" required></textarea>
+                        <textarea id="task-description-input"
+                            class="creation-and-edit-windows-textareas textareas-descriptions"
+                            placeholder="Description: e.g. Do it online..." required></textarea>
+                        <div class="creation-and-edit-windows-inputs-section">
+                            <div class="creation-and-edit-window-sections">
+                                <label for="task-date-input">Due Date: </label><input type="date" id="task-date-input">
+                            </div>
+                            <div class="creation-and-edit-windows-sections">
+                                <label for="task-priority-input">Priority: </label>
+                                <select name="priority" id="task-priority-input">
+                                    <option value="" disabled selected>-- Select a Priority --</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                            <div class="creation-and-edit-windows-sections">
+                                <label for="task-project-input">Project (opt.): </label>
+                                <select name="project" id="task-project-input">
+                                    <option value="">All Tasks (Default)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="creation-and-edit-windows-button" id="add-task-submit-button" type="submit">+ Add
+                            a To Do</button>
+                    </form>
+                    <form id="project-form" class="creation-and-edit-windows-forms">
+                        <textarea id="project-title-input" class="creation-and-edit-windows-textareas textareas-titles"
+                            placeholder="Title: e.g. Studying" required></textarea>
+                        <button class="creation-and-edit-windows-button" id="add-project-submit-button" type="submit">+
+                            Add a Project</button>
+                    </form>
+                    <form id="note-form" class="creation-and-edit-windows-forms">
+                        <textarea id="note-title-input" class="creation-and-edit-windows-textareas textareas-titles"
+                            placeholder="Title:" required></textarea>
+                        <textarea id="note-description-input"
+                            class="creation-and-edit-windows-textareas textareas-descriptions"
+                            placeholder="Description:" required></textarea>
+                        <button class="creation-and-edit-windows-button" id="add-note-submit-button" type="submit">+ Add
+                            a Note</button>
+                    </form>
+                </div>
             </div>
         </div>
+        <div id="edit-task-window" class="creation-and-edit-windows hidden">
+            <div id="edit-window-main-section" class="creation-and-edit-windows-main-section">
+                <div class="creation-and-edit-windows-header">
+                    <h3 class="creation-and-edit-windows-title">Edit a task</h3>
+                    <i id="edit-window-close-button" class="fas fa-times fa-2x"></i>
+                </div>
+                <form id="edit-task-form" class="creation-and-edit-windows-forms form-active">
+                    <textarea id="edit-task-title-input" class="creation-and-edit-windows-textareas textareas-titles"
+                        placeholder="Title: e.g. Pay bills" required></textarea>
+                    <textarea id="edit-task-description-input"
+                        class="creation-and-edit-windows-textareas textareas-descriptions"
+                        placeholder="Description: e.g. Do it online..." required></textarea>
+                    <div class="creation-and-edit-windows-inputs-section">
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-date-input">Due Date: </label><input type="date" id="edit-task-date-input">
+                        </div>
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-priority-input">Priority: </label>
+                            <select name="priority" id="edit-task-priority-input">
+                                <option value="" disabled selected>-- Select a Priority --</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="creation-and-edit-windows-sections">
+                            <label for="task-project-input">Project (opt.): </label>
+                            <select name="project" id="task-project-input">
+                                <option value="">All Tasks (Default)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="creation-and-edit-windows-button" id="edit-task-submit-button" type="submit">Edit a
+                        Task</button>
+                </form>
+            </div>
+        </div>
+        <div class="pages page-active" id="all-tasks-page">
+            <h2 class="page-titles">All Tasks</h2>
+            <div id="list-of-all-tasks" class="lists lists-of-tasks"></div>
+        </div>
+        <div class="pages" id="today-tasks-page">
+            <h2 class="page-titles">Today</h2>
+            <div class="lists lists-of-tasks"></div>
+        </div>
+        <div class="pages" id="week-tasks-page">
+            <h2 class="page-titles">Next 7 Days</h2>
+            <div class="lists lists-of-tasks"></div>
+        </div>
+        <div class="pages" id="all-notes-page">
+            <h2 class="page-titles">Notes</h2>
+            <div id="list-of-all-notes" class="lists"></div>
+        </div>
     </div>
+    <footer>
+        <span>Copyright © 2023 ivooo369</span>
+        <a href="https://github.com/ivooo369" class="github-link"><i class="fab fa-github fa-lg"></i></a>
+    </footer>
+    <div class="overlay hidden"></div>
 </body>
 
 </html>

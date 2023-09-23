@@ -122,7 +122,7 @@ i {
     border-left: 10px solid;
 }
 
-.new-task-data {
+.new-task-data-container {
     display: flex;
     justify-content: center;
 }
@@ -142,7 +142,7 @@ i {
     margin-right: 3rem;
 }
 
-.icons-container {
+.buttons-container {
     display: flex;
     gap: 0.5rem;
     margin-right: 1rem;
@@ -253,7 +253,7 @@ header i {
     display: block;
 }
 
-.creation-window {
+.creation-and-edit-windows {
     display: flex;
     flex-direction: column;
     border: none;
@@ -273,12 +273,24 @@ header i {
     z-index: 9999;
 }
 
-.open-creation-window {
+#edit-task-window {
+    height: 30rem;
+}
+
+#edit-window-main-section {
+    margin: 0;
+}
+
+#edit-task-form {
+    margin: auto;
+}
+
+.open-window {
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
 }
 
-.creation-window-header {
+.creation-and-edit-windows-header {
     display: flex;
     justify-content: space-between;
     background: #aaaaff;
@@ -287,11 +299,11 @@ header i {
     padding: 1.5rem;
 }
 
-.creation-window-title {
+.creation-and-edit-windows-title {
     font-size: 1.8rem;
 }
 
-.creation-window-main-section {
+.creation-and-edit-windows-main-section {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -319,7 +331,7 @@ header i {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.creation-window-forms {
+.creation-and-edit-windows-forms {
     display: none;
     flex-direction: column;
     gap: 1rem;
@@ -330,7 +342,7 @@ header i {
     display: flex;
 }
 
-.creation-window-textareas {
+.creation-and-edit-windows-textareas {
     resize: none;
     padding: 0.5rem;
 }
@@ -341,7 +353,7 @@ textarea {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.creation-window-add-button {
+.creation-and-edit-windows-button {
     width: 25%;
     height: 3rem;
     border: none;
@@ -355,7 +367,7 @@ textarea {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.creation-window label {
+.creation-and-edit-windows label {
     margin-right: 0.3rem;
     font-weight: bold;
     margin: auto 0.3rem auto 0;
@@ -370,7 +382,8 @@ textarea {
     font-size: 1rem;
 }
 
-#task-description-input {
+#task-description-input,
+#edit-task-description-input {
     height: 10rem;
 }
 
@@ -382,7 +395,7 @@ textarea {
     height: 12.7rem;
 }
 
-.creation-window-input-section {
+.creation-and-edit-windows-inputs-section {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -390,7 +403,7 @@ textarea {
     height: 1.7rem;
 }
 
-.creation-window-input-section input,
+.creation-and-edit-windows-inputs-section input,
 select {
     cursor: pointer;
     width: 10rem;
@@ -401,7 +414,7 @@ select {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.creation-window-sections {
+.creation-and-edit-windows-sections {
     display: flex;
 }
 
@@ -425,6 +438,6 @@ footer i:hover {
     color: #ffffff;
 }
 
-.creation-window-add-button:hover {
+.creation-and-edit-windows-button:hover {
     background-color: #000000e6;
 }

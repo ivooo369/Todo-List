@@ -32,10 +32,6 @@
                 </div>
             </div>
             <div class="sections">
-                <h2 class="menu-titles">Projects</h2>
-                <div class="projects-container"></div>
-            </div>
-            <div class="sections">
                 <h2 class="menu-titles">Notes</h2>
                 <button class="menu-buttons" id="all-notes-button">
                     <i class="fas fa-sticky-note fa-2x"></i><span>Show All Notes</span></button>
@@ -50,7 +46,6 @@
             <div class="creation-and-edit-windows-main-section">
                 <div class="selection-section">
                     <button id="task-button" class="selection-buttons">To Do</button>
-                    <button id="project-button" class="selection-buttons">Project</button>
                     <button id="note-button" class="selection-buttons">Note</button>
                 </div>
                 <div class="data-entry-section">
@@ -73,21 +68,9 @@
                                     <option value="High">High</option>
                                 </select>
                             </div>
-                            <div class="creation-and-edit-windows-sections">
-                                <label for="task-project-input">Project (opt.): </label>
-                                <select name="project" id="task-project-input">
-                                    <option value="">All Tasks (Default)</option>
-                                </select>
-                            </div>
                         </div>
                         <button class="creation-and-edit-windows-button" id="add-task-submit-button" type="submit">+ Add
                             a To Do</button>
-                    </form>
-                    <form id="project-form" class="creation-and-edit-windows-forms">
-                        <textarea id="project-title-input" class="creation-and-edit-windows-textareas textareas-titles"
-                            placeholder="Title: e.g. Studying" maxlength="50" required></textarea>
-                        <button class="creation-and-edit-windows-button" id="add-project-submit-button" type="submit">+
-                            Add a Project</button>
                     </form>
                     <form id="note-form" class="creation-and-edit-windows-forms">
                         <textarea id="note-title-input" class="creation-and-edit-windows-textareas textareas-titles"
@@ -115,7 +98,7 @@
                         placeholder="Description: e.g. Do it online..." required></textarea>
                     <div class="creation-and-edit-windows-inputs-section">
                         <div class="creation-and-edit-windows-sections">
-                            <label for="task-date-input">Due Date: </label><input type="date" id="edit-task-date-input">
+                            <div id="edit-task-date-container">Due Date: <span id=edit-task-date></span></div>
                         </div>
                         <div class="creation-and-edit-windows-sections">
                             <label for="task-priority-input">Priority: </label>
@@ -124,12 +107,6 @@
                                 <option value="Low">Low</option>
                                 <option value="Medium">Medium</option>
                                 <option value="High">High</option>
-                            </select>
-                        </div>
-                        <div class="creation-and-edit-windows-sections">
-                            <label for="task-project-input">Project (opt.): </label>
-                            <select name="project" id="task-project-input">
-                                <option value="">All Tasks (Default)</option>
                             </select>
                         </div>
                     </div>
@@ -144,11 +121,11 @@
         </div>
         <div class="pages" id="today-tasks-page">
             <h2 class="page-titles">Today</h2>
-            <div class="lists lists-of-tasks"></div>
+            <div id="list-of-today-tasks" class="lists lists-of-tasks"></div>
         </div>
         <div class="pages" id="week-tasks-page">
             <h2 class="page-titles">Next 7 Days</h2>
-            <div class="lists lists-of-tasks"></div>
+            <div id="list-of-next-week-tasks" class="lists lists-of-tasks"></div>
         </div>
         <div class="pages" id="all-notes-page">
             <h2 class="page-titles">Notes</h2>

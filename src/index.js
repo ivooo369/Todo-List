@@ -1,11 +1,22 @@
-import './style.css';
-import { Task, Project, Note } from './mainLogic';
-import { ImageHandler, CreationWindow, EditWindow, Menu, ContainerCreator } from './domManipulation';
-import { Validation } from './validation';
-import { MenuEventListeners, CreationWindowEventListeners, EditWindowEventListeners, MainInterfaceEventListeners, AllEventListeners } from './handleEventListeners';
+import "./style.css";
+import { Task, Note } from "./mainLogic";
+import {
+  ImageHandler,
+  CreationWindow,
+  EditWindow,
+  Menu,
+  ContainerCreator,
+} from "./domManipulation";
+import { Validation } from "./validation";
+import {
+  MenuEventListeners,
+  CreationWindowEventListeners,
+  EditWindowEventListeners,
+  MainInterfaceEventListeners,
+  AllEventListeners,
+} from "./handleEventListeners";
 
 export const task = Task();
-export const project = Project();
 export const note = Note();
 export const validation = Validation();
 export const creationWindow = CreationWindow();
@@ -21,4 +32,3 @@ const allEventListeners = AllEventListeners();
 
 allEventListeners.handleAllEventListeners();
 imageHandler.createImages();
-

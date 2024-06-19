@@ -1,136 +1,243 @@
-import { containerCreator } from '.';
+import { format } from "date-fns";
+import { v4 as uuidv4 } from "uuid";
+import { containerCreator } from ".";
 
 export const Task = () => {
-    const tasksArray = [];
-    const taskTitlesArray = [];
+  const tasksArray = [];
+  const taskTitlesArray = [];
 
-    function taskFactory(title, description, dueDate, project, priority, isDone = false) {
-        return { title, description, dueDate, project, priority, isDone };
+  function taskFactory(
+    id,
+    title,
+    description,
+    dueDate,
+    priority,
+    isDone = false
+  ) {
+    const formattedDate = format(new Date(dueDate), "dd-MM-yyyy");
+    return {
+      id,
+      title,
+      description,
+      dueDate: formattedDate,
+      priority,
+      isDone,
+    };
+  }
+
+  function addTask(newTask) {
+    tasksArray.push(newTask);
+    taskTitlesArray.push(newTask.title);
+
+    console.log("Updated taskTitlesArray:", taskTitlesArray);
+    console.log("Updated tasksArray:", tasksArray);
+  }
+
+  function deleteTask(taskToDelete) {
+    const indexToDelete = parseInt(taskToDelete.getAttribute("data-task"), 10);
+    if (indexToDelete !== -1 && indexToDelete < tasksArray.length) {
+      tasksArray.splice(indexToDelete, 1);
+      taskTitlesArray.splice(indexToDelete, 1);
+
+      updateDataTaskAttributes(indexToDelete);
+
+      console.log("Updated taskTitlesArray:", taskTitlesArray);
+      console.log("Updated tasksArray:", tasksArray);
+    } else {
+      console.error(`Invalid index ${indexToDelete} for deletion.`);
     }
+  }
 
-    function addTask(newTask) {
-        tasksArray.push(newTask);
-        taskTitlesArray.push(newTask.title);
+  function updateDataTaskAttributes(startIndex) {
+    const taskContainers = document.querySelectorAll(".task-container");
+    const taskDataContainers = document.querySelectorAll(
+      ".task-data-container"
+    );
+    taskContainers.forEach((taskContainer) => {
+      let currentDataTask = parseInt(
+        taskContainer.getAttribute("data-task"),
+        10
+      );
+      if (currentDataTask > startIndex) {
+        currentDataTask -= 1;
+        taskContainer.setAttribute("data-task", currentDataTask);
+      }
+    });
 
-        console.log('Updated tasksArray:', tasksArray);
-        console.log('Updated taskTitlesArray:', taskTitlesArray);
+    taskDataContainers.forEach((taskDataContainer) => {
+      let currentDataTask = parseInt(
+        taskDataContainer.getAttribute("data-task-title"),
+        10
+      );
+      if (currentDataTask > startIndex) {
+        currentDataTask -= 1;
+        taskDataContainer.setAttribute("data-task-title", currentDataTask);
+      }
+    });
+  }
+
+  function editTask(taskIdToEdit, newTitle, newDescription, newPriority) {
+    const indexToEdit = parseInt(taskIdToEdit.getAttribute("data-task"), 10);
+    if (indexToEdit !== -1) {
+      const taskToEdit = tasksArray[indexToEdit];
+      taskToEdit.title = newTitle;
+      taskToEdit.description = newDescription;
+      taskToEdit.priority = newPriority;
+      tasksArray[indexToEdit] = taskToEdit;
+      taskTitlesArray[indexToEdit] = newTitle;
+
+      console.log("Updated taskTitlesArray:", taskTitlesArray);
+      console.log("Updated tasksArray:", tasksArray);
+    } else {
+      console.error(`Task with ID ${taskIdToEdit} not found.`);
     }
+  }
 
-    function deleteTask(taskToDelete) {
-        const indexToDelete = parseInt(taskToDelete.getAttribute('data-task'), 10);
-        const taskContainers = document.querySelectorAll('.task-container');
-        const taskTitles = document.querySelectorAll('.task-title');
-        const taskDueDates = document.querySelectorAll('.task-date');
-        tasksArray.splice(indexToDelete, 1);
-        taskTitlesArray.splice(indexToDelete, 1);
-        taskContainers.forEach((task, index) => {
-            task.setAttribute('data-task', index);
-        });
-        taskTitles.forEach((task, index) => {
-            task.setAttribute('data-task-title', index);
-        });
-        taskDueDates.forEach((task, index) => {
-            task.setAttribute('data-task-date', index);
-        });
+  function createNewTask() {
+    const taskId = uuidv4();
+    const creationTaskForm = document.querySelector("#creation-task-form");
+    const taskTitleInput = document.querySelector("#task-title-input");
+    const taskDescriptionInput = document.querySelector(
+      "#task-description-input"
+    );
+    const taskDueDateInput = document.querySelector("#task-date-input");
 
-        console.log('Updated tasksArray:', tasksArray);
-    }
+    const taskPriorityInput = document.querySelector("#task-priority-input");
+    const newTask = taskFactory(
+      taskId,
+      taskTitleInput.value,
+      taskDescriptionInput.value,
+      taskDueDateInput.value,
+      taskPriorityInput.value
+    );
+    addTask(newTask);
+    creationTaskForm.reset();
+  }
 
-    function editTask(chosenTask, newTitle, newDescription, newDueDate, newPriority) {
-        const indexToEdit = parseInt(chosenTask.getAttribute('data-task'), 10);
-        const taskToEdit = tasksArray[indexToEdit];
-        taskToEdit.title = newTitle;
-        taskToEdit.description = newDescription;
-        taskToEdit.dueDate = newDueDate;
-        taskToEdit.priority = newPriority;
-        console.log(indexToEdit);
-        taskTitlesArray.splice(indexToEdit, 1, newTitle);
-        tasksArray.splice(indexToEdit, 1, taskToEdit);
+  function editChosenTask(chosenTask, newTitle, newPriority) {
+    const editTaskTitleInput = document.querySelector("#edit-task-title-input");
+    const editTaskDescriptionInput = document.querySelector(
+      "#edit-task-description-input"
+    );
+    const editTaskPriorityInput = document.querySelector(
+      "#edit-task-priority-input"
+    );
 
-        console.log('Updated tasksArray:', tasksArray);
-    }
+    const taskId = chosenTask.getAttribute("data-task");
 
-    function createNewTask() {
-        const creationTaskForm = document.querySelector('#creation-task-form');
-        const taskTitleInput = document.querySelector('#task-title-input');
-        const taskDescriptionInput = document.querySelector('#task-description-input');
-        const taskDueDateInput = document.querySelector('#task-date-input');
-        const taskProjectInput = document.querySelector('#task-project-input');
-        const taskPriorityInput = document.querySelector('#task-priority-input');
-        const newTask = taskFactory(taskTitleInput.value, taskDescriptionInput.value, taskDueDateInput.value, taskProjectInput.value, taskPriorityInput.value);
-        addTask(newTask);
-        creationTaskForm.reset();
-    }
+    editTask(
+      chosenTask,
+      editTaskTitleInput.value,
+      editTaskDescriptionInput.value,
+      editTaskPriorityInput.value
+    );
 
-    function editChosenTask(chosenTask, newTitle, newDueDate, newPriority) {
-        const editTaskTitleInput = document.querySelector('#edit-task-title-input');
-        const editTaskDescriptionInput = document.querySelector('#edit-task-description-input');
-        const editTaskDueDateInput = document.querySelector('#edit-task-date-input');
-        const editTaskPriorityInput = document.querySelector('#edit-task-priority-input');
-        const taskTitle = document.querySelector(`[data-task-title="${chosenTask.getAttribute('data-task')}"]`);
-        const taskDueDate = document.querySelector(`[data-task-date="${chosenTask.getAttribute('data-task')}"]`);
-        taskTitle.setAttribute('data-task-title', chosenTask.getAttribute('data-task'));
-        taskDueDate.setAttribute('data-task-date', chosenTask.getAttribute('data-task'));
-        editTask(chosenTask, editTaskTitleInput.value, editTaskDescriptionInput.value, editTaskDueDateInput.value, editTaskPriorityInput.value);
-        taskTitle.textContent = newTitle;
-        taskDueDate.textContent = newDueDate;
-        containerCreator.setNewTaskColor(chosenTask, newPriority);
-    }
+    const taskContainers = document.querySelectorAll(
+      `.task-container[data-task="${taskId}"]`
+    );
+    taskContainers.forEach((taskContainer) => {
+      containerCreator.setNewTaskColor(taskContainer, newPriority);
+    });
 
-    function deleteChosenTask(chosenTask) {
-        deleteTask(chosenTask);
-    }
+    const taskTitleElements = document.querySelectorAll(
+      `.task-data-container[data-task-title="${taskId}"]`
+    );
+    taskTitleElements.forEach((element) => {
+      element.textContent = newTitle;
+    });
+  }
 
-    return { createNewTask, editChosenTask, deleteChosenTask, tasksArray, taskTitlesArray };
-};
+  function deleteChosenTask(chosenTask) {
+    deleteTask(chosenTask);
+  }
 
-export const Project = () => {
-    const projectsArray = [];
+  function isToday(date) {
+    const today = new Date();
+    return (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    );
+  }
 
-    function projectFactory(title) {
-        return { title };
-    }
+  function isUpcoming(date) {
+    const today = new Date();
+    const sevenDaysFromNow = new Date();
+    sevenDaysFromNow.setDate(today.getDate() + 7);
+    return date > today && date <= sevenDaysFromNow;
+  }
 
-    function addProject(newProject) {
-        projectsArray.push(newProject);
-        console.log(projectsArray);
-    }
-
-    function createNewProject() {
-        const projectForm = document.querySelector('#project-form');
-        const projectTitleInput = document.querySelector('#project-title-input');
-        const newProject = projectFactory(projectTitleInput.value);
-        addProject(newProject);
-        projectForm.reset();
-    }
-
-    return { createNewProject, projectsArray };
+  return {
+    taskFactory,
+    createNewTask,
+    editChosenTask,
+    deleteChosenTask,
+    isToday,
+    isUpcoming,
+    tasksArray,
+    taskTitlesArray,
+  };
 };
 
 export const Note = () => {
-    const notesArray = [];
+  const notesArray = [];
 
-    function noteFactory(title, description) {
-        return { title, description };
+  function noteFactory(id, title, description) {
+    return { id, title, description };
+  }
+
+  function addNote(newNote) {
+    notesArray.push(newNote);
+    console.log("Updated notesArray:", notesArray);
+  }
+
+  function deleteNote(noteToDelete) {
+    const indexToDelete = parseInt(noteToDelete.getAttribute("data-note"), 10);
+    if (indexToDelete !== -1 && indexToDelete < notesArray.length) {
+      notesArray.splice(indexToDelete, 1);
+
+      updateDataNoteAttributes(indexToDelete);
+
+      console.log("Updated notesArray:", notesArray);
+    } else {
+      console.error(`Invalid index ${indexToDelete} for deletion.`);
     }
+  }
 
-    function addNote(newNote) {
-        notesArray.push(newNote);
-        console.log(notesArray);
-    }
+  function updateDataNoteAttributes(startIndex) {
+    const noteContainers = document.querySelectorAll(".note-container");
 
-    function createNewNote() {
-        const noteForm = document.querySelector('#note-form');
-        const noteTitleInput = document.querySelector('#note-title-input');
-        const noteDescriptionInput = document.querySelector('#note-description-input');
-        const newNote = noteFactory(noteTitleInput.value, noteDescriptionInput.value);
-        addNote(newNote);
-        noteForm.reset();
-    }
+    noteContainers.forEach((noteContainer) => {
+      let currentDataNote = parseInt(
+        noteContainer.getAttribute("data-note"),
+        10
+      );
+      if (currentDataNote > startIndex) {
+        currentDataNote -= 1;
+        noteContainer.setAttribute("data-note", currentDataNote);
+      }
+    });
+  }
 
-    return { createNewNote, notesArray };
+  function createNewNote() {
+    const noteId = uuidv4();
+    const noteForm = document.querySelector("#note-form");
+    const noteTitleInput = document.querySelector("#note-title-input");
+    const noteDescriptionInput = document.querySelector(
+      "#note-description-input"
+    );
+    const newNote = noteFactory(
+      noteId,
+      noteTitleInput.value,
+      noteDescriptionInput.value
+    );
+    addNote(newNote);
+    noteForm.reset();
+  }
+
+  function deleteChosenNote(chosenNote) {
+    deleteNote(chosenNote);
+  }
+
+  return { noteFactory, createNewNote, deleteChosenNote, notesArray };
 };
-
-
-
-

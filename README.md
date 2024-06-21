@@ -10,11 +10,7 @@ This is a basic task manager project that I created while following The Odin Pro
 - Removing a task;
 - Removing a note;
 - Filtering tasks by their due date;
-
-## Features to be added in future:
-
 - Saving tasks and notes in local storage;
-- Making the project responsive on different screens;
 
 ## Used technologies:
 

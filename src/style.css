@@ -393,10 +393,7 @@ textarea {
   font-size: 1rem;
 }
 
-.textareas-titles {
-  font-size: 1.2rem;
-}
-
+.textareas-titles,
 .textareas-descriptions {
   font-size: 1rem;
 }
@@ -611,13 +608,17 @@ input[type="checkbox"]:hover {
   }
 }
 
-@media (max-height: 800px) {
+@media (max-width: 1000px) and (max-height: 560px) {
   .content {
     height: 46rem;
   }
-}
-
-@media (max-height: 560px) {
+  #creation-task-window {
+    height: 23rem;
+  }
+  #task-description-input,
+  #edit-task-description-input {
+    height: 2.5rem;
+  }
   #creation-task-window {
     height: 23rem;
   }
@@ -660,15 +661,5 @@ input[type="checkbox"]:hover {
   #creation-window-close-button,
   #edit-window-close-button {
     font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 720px) and (max-height: 560px) {
-  #creation-task-window {
-    height: 23rem;
-  }
-  #task-description-input,
-  #edit-task-description-input {
-    height: 2.5rem;
   }
 }

@@ -652,7 +652,9 @@ input[type="checkbox"]:hover {
   .creation-and-edit-windows-button {
     height: 2rem;
   }
-  #task-description-input,
+  #task-description-input {
+    height: 5.2rem;
+  }
   #edit-task-description-input {
     height: 4.5rem;
   }

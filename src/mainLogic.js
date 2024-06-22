@@ -1,10 +1,10 @@
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import { containerCreator } from ".";
 
 export const Task = () => {
-  const tasksArray = [];
-  const taskTitlesArray = [];
+  const tasksArray = JSON.parse(localStorage.getItem("tasksArray")) || [];
+  const taskTitlesArray = tasksArray.map((task) => task.title);
 
   function taskFactory(
     id,
@@ -28,6 +28,7 @@ export const Task = () => {
   function addTask(newTask) {
     tasksArray.push(newTask);
     taskTitlesArray.push(newTask.title);
+    localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
 
     console.log("Updated taskTitlesArray:", taskTitlesArray);
     console.log("Updated tasksArray:", tasksArray);
@@ -40,6 +41,7 @@ export const Task = () => {
       taskTitlesArray.splice(indexToDelete, 1);
 
       updateDataTaskAttributes(indexToDelete);
+      localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
 
       console.log("Updated taskTitlesArray:", taskTitlesArray);
       console.log("Updated tasksArray:", tasksArray);
@@ -85,6 +87,8 @@ export const Task = () => {
       taskToEdit.priority = newPriority;
       tasksArray[indexToEdit] = taskToEdit;
       taskTitlesArray[indexToEdit] = newTitle;
+
+      localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
 
       console.log("Updated taskTitlesArray:", taskTitlesArray);
       console.log("Updated tasksArray:", tasksArray);
@@ -167,6 +171,56 @@ export const Task = () => {
     return date > today && date <= sevenDaysFromNow;
   }
 
+  function renderTasks(tasks) {
+    tasks.forEach((taskData) => {
+      const taskContainer = document.createElement("div");
+      taskContainer.classList.add("task-container");
+      taskContainer.setAttribute("id", taskData.id);
+      taskContainer.setAttribute("data-task", tasks.indexOf(taskData));
+
+      const taskStatus = document.createElement("input");
+      taskStatus.setAttribute("type", "checkbox");
+      taskStatus.classList.add("task-data-container", "task-status-checkbox");
+      taskStatus.checked = taskData.isDone;
+      taskContainer.appendChild(taskStatus);
+
+      const taskTitle = document.createElement("h3");
+      taskTitle.classList.add("task-data-container", "task-title");
+      taskTitle.setAttribute("data-task-title", tasks.indexOf(taskData));
+      taskTitle.textContent = taskData.title;
+      taskContainer.appendChild(taskTitle);
+
+      const taskDueDate = document.createElement("label");
+      taskDueDate.classList.add("task-data-container", "task-date");
+      taskDueDate.setAttribute("data-task-date", tasks.indexOf(taskData));
+      taskDueDate.textContent = taskData.dueDate;
+      taskContainer.appendChild(taskDueDate);
+
+      if (taskData.priority === "Low") {
+        taskContainer.style.borderLeftColor = "#006400";
+      } else if (taskData.priority === "Medium") {
+        taskContainer.style.borderLeftColor = "#ff8c00";
+      } else {
+        taskContainer.style.borderLeftColor = "#8b0000";
+      }
+
+      containerCreator.createEditAndDeleteButtons(taskContainer);
+
+      document.querySelector("#list-of-all-tasks").appendChild(taskContainer);
+
+      const taskDueDateObj = parse(taskData.dueDate, "dd-MM-yyyy", new Date());
+      if (isToday(taskDueDateObj)) {
+        document
+          .querySelector("#list-of-today-tasks")
+          .appendChild(taskContainer.cloneNode(true));
+      } else if (isUpcoming(taskDueDateObj)) {
+        document
+          .querySelector("#list-of-next-week-tasks")
+          .appendChild(taskContainer.cloneNode(true));
+      }
+    });
+  }
+
   return {
     taskFactory,
     createNewTask,
@@ -174,13 +228,14 @@ export const Task = () => {
     deleteChosenTask,
     isToday,
     isUpcoming,
+    renderTasks,
     tasksArray,
     taskTitlesArray,
   };
 };
 
 export const Note = () => {
-  const notesArray = [];
+  const notesArray = JSON.parse(localStorage.getItem("notesArray")) || [];
 
   function noteFactory(id, title, description) {
     return { id, title, description };
@@ -188,6 +243,7 @@ export const Note = () => {
 
   function addNote(newNote) {
     notesArray.push(newNote);
+    localStorage.setItem("notesArray", JSON.stringify(notesArray));
     console.log("Updated notesArray:", notesArray);
   }
 
@@ -197,6 +253,7 @@ export const Note = () => {
       notesArray.splice(indexToDelete, 1);
 
       updateDataNoteAttributes(indexToDelete);
+      localStorage.setItem("notesArray", JSON.stringify(notesArray));
 
       console.log("Updated notesArray:", notesArray);
     } else {
@@ -239,5 +296,37 @@ export const Note = () => {
     deleteNote(chosenNote);
   }
 
-  return { noteFactory, createNewNote, deleteChosenNote, notesArray };
+  function renderNotes(notes) {
+    notes.forEach((note) => {
+      const noteContainer = document.createElement("div");
+      noteContainer.classList.add("note-container");
+      noteContainer.setAttribute("id", note.id);
+      noteContainer.setAttribute("data-note", notes.indexOf(note));
+
+      const deleteNoteButton = document.createElement("button");
+      deleteNoteButton.classList.add("delete-note-button");
+      deleteNoteButton.textContent = "x";
+      noteContainer.appendChild(deleteNoteButton);
+
+      const noteTitle = document.createElement("h3");
+      noteTitle.classList.add("note-title");
+      noteTitle.textContent = note.title;
+      noteContainer.appendChild(noteTitle);
+
+      const noteDescription = document.createElement("p");
+      noteDescription.classList.add("note-description");
+      noteDescription.textContent = note.description;
+      noteContainer.appendChild(noteDescription);
+
+      document.querySelector("#list-of-all-notes").appendChild(noteContainer);
+    });
+  }
+
+  return {
+    noteFactory,
+    createNewNote,
+    deleteChosenNote,
+    renderNotes,
+    notesArray,
+  };
 };

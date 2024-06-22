@@ -382,5 +382,10 @@ export const ContainerCreator = () => {
     newNoteContainer.appendChild(newNoteDescription);
   }
 
-  return { createNewTaskContainer, createNewNoteContainer, setNewTaskColor };
+  return {
+    createNewTaskContainer,
+    createNewNoteContainer,
+    createEditAndDeleteButtons,
+    setNewTaskColor,
+  };
 };

@@ -67,7 +67,8 @@ i {
   flex-direction: column;
   padding: 1rem 1.5rem 0 1.5rem;
   background-color: #dcdcdc;
-  width: calc(100vw - 23rem);
+  width: 100vw;
+  height: calc(100% - 1rem);
   transition: 0.3s ease-in-out;
 }
 
@@ -76,7 +77,7 @@ i {
 }
 
 .pages-full {
-  width: calc(100vw - 3rem);
+  width: 100vw;
 }
 
 .page-titles {
@@ -91,14 +92,12 @@ i {
   display: flex;
   flex-direction: column;
   gap: 5rem;
-  width: 20rem;
+  width: 25rem;
   padding: 5rem 0;
-  transition: 0.3s ease-in-out;
 }
 
 .hidden-menu {
-  transform: translateX(-20rem);
-  width: 0;
+  display: none;
 }
 
 .menu-titles {
@@ -114,6 +113,7 @@ i {
   word-wrap: break-word;
   gap: 0.9rem;
   padding: 1rem 0;
+  margin-bottom: 1.5rem;
   border-radius: 0.5rem;
   overflow-y: auto;
 }
@@ -142,6 +142,11 @@ i {
 
 .task-title {
   margin-right: auto;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .task-date {
@@ -227,8 +232,10 @@ footer {
   align-items: center;
   gap: 0.5rem;
   height: 3rem;
-  position: absolute;
+  position: fixed;
   bottom: 0;
+  background-color: hsla(0, 0%, 0%, 0.75);
+  color: #ffffff;
   width: 100%;
   font-weight: bold;
   border-top: 1px solid black;
@@ -491,8 +498,114 @@ input[type="checkbox"]:hover {
   background-color: #ffffff;
 }
 
+@media (max-width: 880px) {
+  .content {
+    flex-direction: column;
+  }
+  .menu-container,
+  .pages {
+    width: auto;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
+  .lists img {
+    margin-bottom: 5rem;
+  }
+  .creation-and-edit-windows {
+    width: 45rem;
+  }
+  #creation-task-form,
+  #edit-task-form,
+  #note-form {
+    width: 40rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .creation-and-edit-windows {
+    width: 35rem;
+    height: 38rem;
+  }
+  #creation-task-form,
+  #edit-task-form,
+  #note-form {
+    width: 30rem;
+  }
+  #edit-task-window {
+    height: 35rem;
+  }
+  .creation-and-edit-windows-button {
+    width: 30%;
+  }
+  .creation-and-edit-windows-inputs-section {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 560px) {
   .title-container {
-    display: none;
+    font-size: 1rem;
+  }
+  .creation-and-edit-windows,
+  #edit-task-window {
+    width: 25rem;
+  }
+  #creation-task-form,
+  #edit-task-form,
+  #note-form {
+    width: 20rem;
+  }
+  .creation-and-edit-windows-button {
+    width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-container {
+    font-size: 0.6rem;
+  }
+  .title-image {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .creation-and-edit-windows {
+    width: 20rem;
+  }
+  #edit-task-window {
+    width: 20rem;
+  }
+  #creation-task-form,
+  #edit-task-form,
+  #note-form {
+    width: 15rem;
+    height: 25rem;
+  }
+  .creation-and-edit-windows-inputs-section {
+    text-align: center;
+    gap: 1rem;
+  }
+  .creation-and-edit-windows-button {
+    width: 60%;
+  }
+  .creation-and-edit-windows-sections {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .title-container {
+    font-size: 0.5rem;
+  }
+  .title-image {
+    width: 2rem;
+    height: 2rem;
+  }
+  .header-buttons {
+    font-size: 0.8rem;
+    gap: 0;
   }
 }

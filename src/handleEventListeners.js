@@ -16,6 +16,19 @@ import {
 let chosenTask = "";
 let chosenNote = "";
 
+window.addEventListener("load", () => {
+  const storedTasks = JSON.parse(localStorage.getItem("tasksArray")) || [];
+  const storedNotes = JSON.parse(localStorage.getItem("notesArray")) || [];
+
+  if (storedTasks) {
+    task.renderTasks(storedTasks);
+  }
+  if (storedNotes) {
+    note.renderNotes(storedNotes);
+  }
+  imageHandler.handlePageImageDisplaying();
+});
+
 export const MenuEventListeners = () => {
   const homeButton = document.querySelector("#home-button");
   const allTasksButton = document.querySelector("#all-tasks-button");

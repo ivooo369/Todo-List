@@ -638,7 +638,6 @@ input[type="checkbox"]:hover {
   .creation-and-edit-windows-forms {
     justify-content: start;
     gap: 0.5rem;
-    margin: 0.5rem auto;
   }
   .selection-buttons {
     height: 2rem;
@@ -655,7 +654,7 @@ input[type="checkbox"]:hover {
   }
   #task-description-input,
   #edit-task-description-input {
-    height: 5.2rem;
+    height: 4.5rem;
   }
   #note-description-input {
     height: 7.4rem;

@@ -195,7 +195,7 @@ export const EditWindow = () => {
 
     const taskDueDate = task.tasksArray[indexToEdit].dueDate;
     const parsedDueDate = parse(taskDueDate, "dd-MM-yyyy", new Date());
-    const formattedDueDate = format(parsedDueDate, "dd/MM/yyyy");
+    const formattedDueDate = format(parsedDueDate, "dd-MM-yyyy");
     editTaskDueDate.textContent = formattedDueDate;
 
     console.log(editTaskDueDate.value);
@@ -322,7 +322,7 @@ export const ContainerCreator = () => {
     );
     newTaskDueDateLabel.textContent = format(
       new Date(taskDueDateInput.value),
-      "dd/MM/yyyy"
+      "dd-MM-yyyy"
     );
     newTaskContainer.appendChild(newTaskDueDateLabel);
     setNewTaskColor(newTaskContainer, taskPriorityInput);

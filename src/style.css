@@ -608,10 +608,13 @@ input[type="checkbox"]:hover {
   }
 }
 
-@media (max-width: 1000px) and (max-height: 560px) {
+@media (max-height: 800px) {
   .content {
     height: 46rem;
   }
+}
+
+@media (max-width: 1000px) and (max-height: 560px) {
   #creation-task-window {
     height: 23rem;
   }

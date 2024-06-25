@@ -29,9 +29,6 @@ export const Task = () => {
     tasksArray.push(newTask);
     taskTitlesArray.push(newTask.title);
     localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
-
-    console.log("Updated taskTitlesArray:", taskTitlesArray);
-    console.log("Updated tasksArray:", tasksArray);
   }
 
   function deleteTask(taskToDelete) {
@@ -42,11 +39,6 @@ export const Task = () => {
 
       updateDataTaskAttributes(indexToDelete);
       localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
-
-      console.log("Updated taskTitlesArray:", taskTitlesArray);
-      console.log("Updated tasksArray:", tasksArray);
-    } else {
-      console.error(`Invalid index ${indexToDelete} for deletion.`);
     }
   }
 
@@ -78,22 +70,24 @@ export const Task = () => {
     });
   }
 
-  function editTask(taskIdToEdit, newTitle, newDescription, newPriority) {
+  function editTask(
+    taskIdToEdit,
+    newTitle,
+    newDescription,
+    newDueDate,
+    newPriority
+  ) {
     const indexToEdit = parseInt(taskIdToEdit.getAttribute("data-task"), 10);
     if (indexToEdit !== -1) {
       const taskToEdit = tasksArray[indexToEdit];
       taskToEdit.title = newTitle;
       taskToEdit.description = newDescription;
+      taskToEdit.dueDate = format(new Date(newDueDate), "dd-MM-yyyy");
       taskToEdit.priority = newPriority;
       tasksArray[indexToEdit] = taskToEdit;
       taskTitlesArray[indexToEdit] = newTitle;
 
       localStorage.setItem("tasksArray", JSON.stringify(tasksArray));
-
-      console.log("Updated taskTitlesArray:", taskTitlesArray);
-      console.log("Updated tasksArray:", tasksArray);
-    } else {
-      console.error(`Task with ID ${taskIdToEdit} not found.`);
     }
   }
 
@@ -118,10 +112,13 @@ export const Task = () => {
     creationTaskForm.reset();
   }
 
-  function editChosenTask(chosenTask, newTitle, newPriority) {
+  function editChosenTask(chosenTask) {
     const editTaskTitleInput = document.querySelector("#edit-task-title-input");
     const editTaskDescriptionInput = document.querySelector(
       "#edit-task-description-input"
+    );
+    const editTaskDueDateInput = document.querySelector(
+      "#edit-task-date-input"
     );
     const editTaskPriorityInput = document.querySelector(
       "#edit-task-priority-input"
@@ -133,6 +130,7 @@ export const Task = () => {
       chosenTask,
       editTaskTitleInput.value,
       editTaskDescriptionInput.value,
+      editTaskDueDateInput.value,
       editTaskPriorityInput.value
     );
 
@@ -140,15 +138,29 @@ export const Task = () => {
       `.task-container[data-task="${taskId}"]`
     );
     taskContainers.forEach((taskContainer) => {
-      containerCreator.setNewTaskColor(taskContainer, newPriority);
+      containerCreator.setNewTaskColor(
+        taskContainer,
+        editTaskPriorityInput.value
+      );
     });
 
     const taskTitleElements = document.querySelectorAll(
       `.task-data-container[data-task-title="${taskId}"]`
     );
     taskTitleElements.forEach((element) => {
-      element.textContent = newTitle;
+      element.textContent = editTaskTitleInput.value;
     });
+
+    const taskDueDateElements = document.querySelectorAll(
+      `.task-data-container[data-task-date="${taskId}"]`
+    );
+    taskDueDateElements.forEach((element) => {
+      element.textContent = format(
+        new Date(editTaskDueDateInput.value),
+        "dd-MM-yyyy"
+      );
+    });
+    location.reload();
   }
 
   function deleteChosenTask(chosenTask) {
@@ -244,7 +256,6 @@ export const Note = () => {
   function addNote(newNote) {
     notesArray.push(newNote);
     localStorage.setItem("notesArray", JSON.stringify(notesArray));
-    console.log("Updated notesArray:", notesArray);
   }
 
   function deleteNote(noteToDelete) {
@@ -254,10 +265,6 @@ export const Note = () => {
 
       updateDataNoteAttributes(indexToDelete);
       localStorage.setItem("notesArray", JSON.stringify(notesArray));
-
-      console.log("Updated notesArray:", notesArray);
-    } else {
-      console.error(`Invalid index ${indexToDelete} for deletion.`);
     }
   }
 

@@ -178,7 +178,7 @@ export const EditWindow = () => {
   const editTaskDescriptionInput = document.querySelector(
     "#edit-task-description-input"
   );
-  const editTaskDueDate = document.querySelector("#edit-task-date");
+  const editTaskDateInput = document.querySelector("#edit-task-date-input");
   const editTaskPriorityInput = document.querySelector(
     "#edit-task-priority-input"
   );
@@ -195,10 +195,9 @@ export const EditWindow = () => {
 
     const taskDueDate = task.tasksArray[indexToEdit].dueDate;
     const parsedDueDate = parse(taskDueDate, "dd-MM-yyyy", new Date());
-    const formattedDueDate = format(parsedDueDate, "dd-MM-yyyy");
-    editTaskDueDate.textContent = formattedDueDate;
+    const formattedDueDate = format(parsedDueDate, "yyyy-MM-dd");
 
-    console.log(editTaskDueDate.value);
+    editTaskDateInput.value = formattedDueDate;
     editTaskPriorityInput.value = task.tasksArray[indexToEdit].priority;
   }
 

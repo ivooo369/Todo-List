@@ -427,6 +427,7 @@ select {
 
 .creation-and-edit-windows-sections {
   display: flex;
+  gap: 0.5rem;
 }
 
 .menu-buttons:hover,
@@ -451,13 +452,6 @@ footer i:hover {
 
 .creation-and-edit-windows-button:hover {
   background-color: #000000e6;
-}
-
-#edit-task-date-container {
-  background: #000000bf;
-  padding: 0.5rem 1rem;
-  color: #ffffff;
-  border-radius: 5px;
 }
 
 input[type="checkbox"]:hover {

@@ -126,6 +126,7 @@ export const EditWindowEventListeners = () => {
   const editTaskDescriptionInput = document.querySelector(
     "#edit-task-description-input"
   );
+  const editTaskDateInput = document.querySelector("#edit-task-date-input");
   const editTaskPriorityInput = document.querySelector(
     "#edit-task-priority-input"
   );
@@ -142,6 +143,10 @@ export const EditWindowEventListeners = () => {
       validation.clearValidationMessage
     );
     editTaskDescriptionInput.addEventListener(
+      "input",
+      validation.clearValidationMessage
+    );
+    editTaskDateInput.addEventListener(
       "input",
       validation.clearValidationMessage
     );
